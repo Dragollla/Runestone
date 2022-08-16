@@ -5,6 +5,7 @@ import Foundation
 /// This can be used to show a preview of search results. There is no way to get an attributed string from a text view without using a `TextPreview`.
 ///
 /// The range of the text view may be longer than the one passed to ``TextView/textPreview(containing:)`` when creating the preview. This is done to provide some context around the input range. Use ``TextPreview/needleInPreviewRange`` to shorten the preview and get the text in the exact input range if needed.
+@available(iOS 14.0, *)
 public final class TextPreview {
     /// The range passed to ``TextView/textPreview(containing:)`` when creating the preview.
     public let needleRange: NSRange
@@ -60,7 +61,7 @@ public final class TextPreview {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension TextPreview {
     private func updateAttributedString() {
         let resultingAttributedString = NSMutableAttributedString()

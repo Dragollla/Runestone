@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class TimedUndoManager: UndoManager {
     private let endGroupingInterval: TimeInterval = 1
     private var endGroupingTimer: Timer?
@@ -38,7 +39,7 @@ final class TimedUndoManager: UndoManager {
         super.undo()
     }
 }
-
+@available(iOS 14.0, *)
 private extension TimedUndoManager {
     private func scheduleTimer() {
         let timer = Timer(timeInterval: endGroupingInterval, target: self, selector: #selector(timerDidTrigger), userInfo: nil, repeats: false)

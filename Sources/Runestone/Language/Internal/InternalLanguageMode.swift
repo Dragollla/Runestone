@@ -1,10 +1,12 @@
 import Foundation
 
+@available(iOS 14.0, *)
 struct InsertLineBreakIndentStrategy {
     let indentLevel: Int
     let insertExtraLineBreak: Bool
 }
 
+@available(iOS 14.0, *)
 protocol InternalLanguageMode: AnyObject {
     func parse(_ text: NSString)
     func parse(_ text: NSString, completion: @escaping ((Bool) -> Void))

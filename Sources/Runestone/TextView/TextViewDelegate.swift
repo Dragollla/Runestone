@@ -1,6 +1,7 @@
 import Foundation
 
 /// The methods for receiving editing-related messages for the text view.
+@available(iOS 14.0, *)
 public protocol TextViewDelegate: AnyObject {
     /// Asks the delegate whether to begin editing in the text view.
     /// - Parameter textView: The text view for which editing is about to begin.
@@ -103,6 +104,7 @@ public protocol TextViewDelegate: AnyObject {
     func textView(_ textView: TextView, replaceTextIn highlightedRange: HighlightedRange)
 }
 
+@available(iOS 14.0, *)
 public extension TextViewDelegate {
     func textViewShouldBeginEditing(_ textView: TextView) -> Bool {
         return true

@@ -1,5 +1,5 @@
 import TreeSitter
-
+@available(iOS 14.0, *)
 final class TreeSitterQueryCursor {
     private let pointer: OpaquePointer
     private let query: TreeSitterQuery

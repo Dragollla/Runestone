@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class TreeSitterCapture {
     let node: TreeSitterNode
     let index: UInt32
@@ -24,7 +25,7 @@ final class TreeSitterCapture {
         self.nameComponentCount = name.split(separator: ".").count
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterCapture: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterCapture byteRange=\(byteRange) name=\(name) properties=\(properties) textPredicates=\(textPredicates)]"

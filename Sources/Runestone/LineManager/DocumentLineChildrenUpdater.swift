@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-
+@available(iOS 14.0, *)
 final class DocumentLineChildrenUpdater: RedBlackTreeChildrenUpdater<DocumentLineNodeID, Int, DocumentLineNodeData> {
     override func updateAfterChangingChildren(of node: Node) -> Bool {
         var totalLineHeight = node.data.lineHeight

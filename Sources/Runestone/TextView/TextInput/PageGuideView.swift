@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class PageGuideView: UIView {
     var hairlineWidth: CGFloat = 1 / UIScreen.main.scale {
         didSet {

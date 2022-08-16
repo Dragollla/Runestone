@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 struct TextEditResult {
     let textChange: TextChange
     let lineChangeSet: LineChangeSet
@@ -9,7 +9,7 @@ struct TextEditResult {
         return didAddLines || didRemoveLines
     }
 }
-
+@available(iOS 14.0, *)
 final class TextEditHelper {
     private let stringView: StringView
     private let lineManager: LineManager

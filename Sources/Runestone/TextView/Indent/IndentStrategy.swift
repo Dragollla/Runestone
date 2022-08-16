@@ -1,6 +1,7 @@
 import Foundation
 
 /// Strategy to use when indenting text.
+@available(iOS 14.0, *)
 public enum IndentStrategy: Equatable {
     /// Indent using tabs. The length specified length is used to determine the width of the tab measured in space characers.
     case tab(length: Int)
@@ -8,6 +9,7 @@ public enum IndentStrategy: Equatable {
     case space(length: Int)
 }
 
+@available(iOS 14.0, *)
 extension IndentStrategy {
     var tabLength: Int {
         switch self {

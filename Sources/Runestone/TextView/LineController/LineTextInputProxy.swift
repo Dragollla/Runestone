@@ -2,6 +2,7 @@ import CoreGraphics
 import CoreText
 import Foundation
 
+@available(iOS 14, *)
 final class LineTextInputProxy {
     var estimatedLineFragmentHeight: CGFloat = 12
     var lineFragmentHeightMultiplier: CGFloat = 1

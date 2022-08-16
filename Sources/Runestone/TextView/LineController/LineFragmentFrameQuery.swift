@@ -1,5 +1,6 @@
 import CoreGraphics
 
+@available(iOS 14, *)
 final class LineFragmentFrameQuery: RedBlackTreeSearchQuery {
     typealias NodeID = LineFragmentNodeID
     typealias NodeValue = Int

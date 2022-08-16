@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14, *)
 final class LineNumberView: UIView, ReusableView {
     var textColor: UIColor {
         get {

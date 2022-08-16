@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class StringViewBytesResult {
     // The bytes are not deallocated by this type.
     let bytes: UnsafePointer<Int8>
@@ -11,6 +12,7 @@ final class StringViewBytesResult {
     }
 }
 
+@available(iOS 14.0, *)
 final class StringView {
     var string: NSString {
         get {
@@ -82,6 +84,7 @@ final class StringView {
     }
 }
 
+@available(iOS 14.0, *)
 private extension StringView {
     private func invalidate() {
         _swiftString = nil

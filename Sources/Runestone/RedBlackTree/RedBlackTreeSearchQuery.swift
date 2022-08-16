@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 protocol RedBlackTreeSearchQuery {
     associatedtype NodeID: RedBlackTreeNodeID
     associatedtype NodeValue: RedBlackTreeNodeValue

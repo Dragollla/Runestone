@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class LineDetails {
     let startLocation: Int
     let totalLength: Int
@@ -11,7 +11,7 @@ final class LineDetails {
         self.position = position
     }
 }
-
+@available(iOS 14.0, *)
 extension LineDetails: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[LinePosition startLocation=\(startLocation) totalLength=\(totalLength) position=\(position)]"

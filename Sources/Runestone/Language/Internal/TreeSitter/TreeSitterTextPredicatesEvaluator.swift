@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class TreeSitterTextPredicatesEvaluator {
     private let match: TreeSitterQueryMatch
     private let stringView: StringView
@@ -44,7 +44,7 @@ final class TreeSitterTextPredicatesEvaluator {
         return true
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterTextPredicatesEvaluator {
     func evaluate(using parameters: TreeSitterTextPredicate.CaptureEqualsStringParameters) -> Bool {
         guard let capture = match.capture(forIndex: parameters.captureIndex) else {

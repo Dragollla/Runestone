@@ -1,6 +1,7 @@
 import Foundation
 
 /// Line ending character to use when inserting a line break in the text view.
+@available(iOS 14, *)
 public enum LineEnding: String, CaseIterable {
     /// Unix (LF) line endings.
     ///

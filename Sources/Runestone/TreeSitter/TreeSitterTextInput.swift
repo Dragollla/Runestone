@@ -1,14 +1,15 @@
 import TreeSitter
-
+@available(iOS 14.0, *)
 struct TreeSitterTextProviderResult {
     let bytes: UnsafePointer<Int8>
     let length: UInt32
 }
-
+@available(iOS 14.0, *)
 typealias TreeSitterReadCallback = (_ byteIndex: ByteCount, _ position: TreeSitterTextPoint) -> TreeSitterTextProviderResult?
 
 /// The implementation is inspired by SwiftTreeSitter.
 /// https://github.com/ChimeHQ/SwiftTreeSitter/blob/main/Sources/SwiftTreeSitter/Input.swift
+@available(iOS 14.0, *)
 final class TreeSitterTextInput {
     fileprivate let encoding: TSInputEncoding
     fileprivate let callback: TreeSitterReadCallback
@@ -31,7 +32,7 @@ final class TreeSitterTextInput {
         bytePointers = []
     }
 }
-
+@available(iOS 14.0, *)
 private func read(payload: UnsafeMutableRawPointer?,
                   byteIndex: UInt32,
                   position: TSPoint,

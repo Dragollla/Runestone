@@ -1,10 +1,12 @@
 import CoreText
 import UIKit
 
+@available(iOS 14, *)
 protocol LineFragmentRendererDelegate: AnyObject {
     func string(in lineFragmentRenderer: LineFragmentRenderer) -> String?
 }
 
+@available(iOS 14, *)
 final class LineFragmentRenderer {
     private enum HorizontalPosition {
         case character(Int)
@@ -35,7 +37,7 @@ final class LineFragmentRenderer {
         drawText(to: context)
     }
 }
-
+@available(iOS 14.0, *)
 private extension LineFragmentRenderer {
     private func drawMarkedRange(to context: CGContext) {
         if let markedRange = markedRange {

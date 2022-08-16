@@ -6,6 +6,7 @@ import TreeSitter
 /// Use a `TreeSitterLanguage` with ``TreeSitterLanguageMode`` to perform syntax highlighting using [Tree-sitter](https://tree-sitter.github.io/tree-sitter/).
 ///
 /// Refer to <doc:AddingATreeSitterLanguage> for more information on adding a Tree-sitter language to your project.
+@available(iOS 14.0, *)
 public final class TreeSitterLanguage {
     /// Reference to the raw Tree-sitter language.
     public let languagePointer: UnsafePointer<TSLanguage>
@@ -54,7 +55,7 @@ public final class TreeSitterLanguage {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterLanguage {
     /// A set of patterns to be matched against the syntax tree. Queries are used for syntax highlighting and detecting injected languages.
     ///
@@ -80,7 +81,7 @@ extension TreeSitterLanguage {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterInternalLanguage {
     // The initializer is kept in an extension in this file to avoid accidentally using it throughout the codebase
     // instead of using the `internalLanguage` property on TreeSitterLanguage.

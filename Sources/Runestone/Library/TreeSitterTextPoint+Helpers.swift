@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 extension TreeSitterTextPoint {
     convenience init(_ linePosition: LinePosition) {
         let row = UInt32(linePosition.row)

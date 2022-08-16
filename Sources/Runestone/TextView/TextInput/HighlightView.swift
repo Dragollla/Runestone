@@ -1,5 +1,7 @@
 import UIKit
 
+
+@available(iOS 14.0, *)
 final class HighlightView: UIView, ReusableView {
     func update(with highlightRect: CachedHighlightRect) {
         frame = highlightRect.rect

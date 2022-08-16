@@ -1,11 +1,13 @@
 import Foundation
 import UIKit
 
+@available(iOS 14.0, *)
 protocol IndentControllerDelegate: AnyObject {
     func indentController(_ controller: IndentController, shouldInsert text: String, in range: NSRange)
     func indentController(_ controller: IndentController, shouldSelect range: NSRange)
 }
 
+@available(iOS 14.0, *)
 final class IndentController {
     weak var delegate: IndentControllerDelegate?
     var stringView: StringView
@@ -162,7 +164,7 @@ final class IndentController {
         return NSRange(location: location - tabLength, length: tabLength)
     }
 }
-
+@available(iOS 14.0, *)
 extension IndentController {
     private func range(surrounding lines: [DocumentLineNode]) -> NSRange {
         let firstLine = lines[0]

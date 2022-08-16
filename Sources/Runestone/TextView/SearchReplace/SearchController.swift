@@ -1,9 +1,9 @@
 import Foundation
-
+@available(iOS 14.0, *)
 protocol SearchControllerDelegate: AnyObject {
     func searchController(_ searchController: SearchController, linePositionAt location: Int) -> LinePosition?
 }
-
+@available(iOS 14.0, *)
 final class SearchController {
     weak var delegate: SearchControllerDelegate?
 
@@ -34,7 +34,7 @@ final class SearchController {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension SearchController {
     private func search(for query: SearchQuery, replacingWithPlainText replacementText: String) -> [SearchReplaceResult] {
         return search(for: query) { textCheckingResult in

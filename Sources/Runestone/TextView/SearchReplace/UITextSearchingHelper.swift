@@ -1,5 +1,5 @@
 import UIKit
-
+@available(iOS 14.0, *)
 final class UITextSearchingHelper: NSObject {
     weak var textView: TextView?
 #if compiler(>=5.7)
@@ -135,7 +135,7 @@ extension UITextSearchingHelper: UITextSearching {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension UITextSearchingHelper {
     private func addFindInteraction() {
         if #available(iOS 16, *), findInteraction == nil {
@@ -167,14 +167,14 @@ private extension UITextSearchingHelper {
         queue.addOperation(operation)
     }
 }
-
+@available(iOS 14.0, *)
 extension UITextSearchingHelper: UIFindInteractionDelegate {
     @available(iOS 16, *)
     func findInteraction(_ interaction: UIFindInteraction, sessionFor view: UIView) -> UIFindSession? {
         return UITextSearchingFindSession(searchableObject: self)
     }
 }
-
+@available(iOS 14.0, *)
 private extension SearchQuery {
     @available(iOS 16, *)
     init(queryString: String, options: UITextSearchOptions) {

@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class TreeSitterIndentController {
     private let indentationScopes: TreeSitterIndentationScopes
     private let stringView: StringView
@@ -55,7 +56,7 @@ final class TreeSitterIndentController {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterIndentController {
     private func indentLevelAdjustment(from node: TreeSitterNode) -> Int {
         // Loop through sibling nodes that start on the current line and check if any increases or decreases

@@ -1,10 +1,10 @@
 import Foundation
 import TreeSitter
-
+@available(iOS 14.0, *)
 protocol TreeSitterParserDelegate: AnyObject {
     func parser(_ parser: TreeSitterParser, bytesAt byteIndex: ByteCount) -> TreeSitterTextProviderResult?
 }
-
+@available(iOS 14.0, *)
 final class TreeSitterParser {
     weak var delegate: TreeSitterParserDelegate?
     let encoding: TSInputEncoding
@@ -75,7 +75,7 @@ final class TreeSitterParser {
         ts_parser_set_included_ranges(pointer, nil, 0)
     }
 }
-
+@available(iOS 14.0, *)
 private extension TSInputEncoding {
     var stringEncoding: String.Encoding? {
         switch self {

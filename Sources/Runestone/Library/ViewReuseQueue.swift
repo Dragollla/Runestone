@@ -1,13 +1,14 @@
 import UIKit
 
+@available(iOS 14.0, *)
 protocol ReusableView {
     func prepareForReuse()
 }
-
+@available(iOS 14.0, *)
 extension ReusableView {
     func prepareForReuse() {}
 }
-
+@available(iOS 14.0, *)
 final class ViewReuseQueue<Key: Hashable, View: UIView & ReusableView> {
     private(set) var visibleViews: [Key: View] = [:]
 

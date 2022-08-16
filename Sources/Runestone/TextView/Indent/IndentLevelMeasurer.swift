@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class IndentLevelMeasurer {
     private let stringView: StringView
 

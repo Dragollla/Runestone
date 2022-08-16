@@ -1,6 +1,7 @@
 import Foundation
 
 /// Node in the syntax tree.
+@available(iOS 14.0, *)
 public struct SyntaxNode: Equatable, Hashable {
     /// Type of the node. Values depend on the language.
     ///

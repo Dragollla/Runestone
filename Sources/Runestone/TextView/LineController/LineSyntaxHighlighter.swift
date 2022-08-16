@@ -5,11 +5,9 @@ extension NSAttributedString.Key {
     static let isBold = NSAttributedString.Key("runestone_isBold")
     static let isItalic = NSAttributedString.Key("runestone_isItalic")
 }
-
 struct LineSyntaxHiglighterSetAttributesResult {
     let isSizingInvalid: Bool
 }
-
 final class LineSyntaxHighlighterInput {
     let attributedString: NSMutableAttributedString
     let byteRange: ByteRange
@@ -19,7 +17,7 @@ final class LineSyntaxHighlighterInput {
         self.byteRange = byteRange
     }
 }
-
+@available(iOS 14.0, *)
 protocol LineSyntaxHighlighter: AnyObject {
     typealias AsyncCallback = (Result<Void, Error>) -> Void
     var theme: Theme { get set }
@@ -30,7 +28,7 @@ protocol LineSyntaxHighlighter: AnyObject {
     func syntaxHighlight(_ input: LineSyntaxHighlighterInput, completion: @escaping AsyncCallback)
     func cancel()
 }
-
+@available(iOS 14.0, *)
 extension LineSyntaxHighlighter {
     func setDefaultAttributes(on attributedString: NSMutableAttributedString) {
         let entireRange = NSRange(location: 0, length: attributedString.length)

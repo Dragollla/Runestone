@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14, *)
 final class TreeSitterSyntaxHighlightToken {
     let range: NSRange
     let textColor: UIColor?
@@ -18,13 +19,13 @@ final class TreeSitterSyntaxHighlightToken {
         self.fontTraits = fontTraits
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterSyntaxHighlightToken: Equatable {
     static func == (lhs: TreeSitterSyntaxHighlightToken, rhs: TreeSitterSyntaxHighlightToken) -> Bool {
         return lhs.range == rhs.range && lhs.textColor == rhs.textColor && lhs.font == rhs.font
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterSyntaxHighlightToken {
     static func locationSort(_ lhs: TreeSitterSyntaxHighlightToken, _ rhs: TreeSitterSyntaxHighlightToken) -> Bool {
         if lhs.range.location != rhs.range.location {
@@ -34,7 +35,7 @@ extension TreeSitterSyntaxHighlightToken {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterSyntaxHighlightToken: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterSyntaxHighlightToken: \(range.location) - \(range.length)]"

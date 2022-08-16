@@ -1,9 +1,11 @@
 import UIKit
 
+@available(iOS 14, *)
 protocol LineFragmentControllerDelegate: AnyObject {
     func string(in controller: LineFragmentController) -> String?
 }
 
+@available(iOS 14, *)
 final class LineFragmentController {
     weak var delegate: LineFragmentControllerDelegate?
     var lineFragment: LineFragment {
@@ -70,6 +72,7 @@ final class LineFragmentController {
 }
 
 // MARK: - LineFragmentRendererDelegate
+@available(iOS 14.0, *)
 extension LineFragmentController: LineFragmentRendererDelegate {
     func string(in lineFragmentRenderer: LineFragmentRenderer) -> String? {
         return delegate?.string(in: self)

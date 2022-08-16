@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class LineEndingDetector {
     private let lineManager: LineManager
     private let stringView: StringView

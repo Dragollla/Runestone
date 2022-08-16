@@ -1,6 +1,7 @@
 import CoreText
 import Foundation
 
+@available(iOS 14, *)
 struct LineFragmentID: Identifiable, Hashable {
     let id: String
 
@@ -8,13 +9,14 @@ struct LineFragmentID: Identifiable, Hashable {
         self.id = "\(lineId)[\(lineFragmentIndex)]"
     }
 }
-
+@available(iOS 14.0, *)
 extension LineFragmentID: CustomDebugStringConvertible {
     var debugDescription: String {
         return id
     }
 }
 
+@available(iOS 14, *)
 final class LineFragment {
     let id: LineFragmentID
     let index: Int
@@ -36,7 +38,7 @@ final class LineFragment {
         self.yPosition = yPosition
     }
 }
-
+@available(iOS 14.0, *)
 extension LineFragment: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[LineFragment id=\(id) descent=\(descent) baseSize=\(baseSize) scaledSize=\(scaledSize) yPosition=\(yPosition)]"

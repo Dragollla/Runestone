@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 struct TextChange {
     let byteRange: ByteRange
     let bytesAdded: ByteCount

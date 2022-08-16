@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 enum TreeSitterPredicateMapper {
     struct MapResult {
         let properties: [String: String]
@@ -30,7 +30,7 @@ enum TreeSitterPredicateMapper {
         return MapResult(properties: properties, textPredicates: textPredicates)
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterPredicateMapper {
     private static func properties(fromSetSteps steps: [TreeSitterPredicate.Step]) -> (name: String, value: String) {
         guard steps.count == 2 else {

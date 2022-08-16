@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 extension NSRange {
     /// Creates an NSRange from a `ByteRange`.
     /// - Parameter byteRange: `ByteRange` to convert to NSRange.

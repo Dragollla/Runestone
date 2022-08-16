@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14, *)
 final class PageGuideController {
     let guideView = PageGuideView()
     var font: UIFont = .systemFont(ofSize: 14) {

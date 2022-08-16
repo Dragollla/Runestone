@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class PlainTextInternalLanguageMode: InternalLanguageMode {
     func parse(_ text: NSString) {}
 

@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 enum TreeSitterTextPredicate {
     final class CaptureEqualsStringParameters {
         let captureIndex: UInt32
@@ -50,13 +50,13 @@ enum TreeSitterTextPredicate {
     case captureMatchesPattern(CaptureMatchesPatternParameters)
     case unsupported(UnsupportedParameters)
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTextPredicate.CaptureEqualsStringParameters: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTextPredicate.CaptureEqualsStringParameters captureIndex=\(captureIndex) string=\(string) isPositive=\(isPositive)]"
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTextPredicate.CaptureEqualsCaptureParameters: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTextPredicate.CaptureEqualsCaptureParameters lhsCaptureIndex=\(lhsCaptureIndex)"
@@ -64,7 +64,7 @@ extension TreeSitterTextPredicate.CaptureEqualsCaptureParameters: CustomDebugStr
         + " isPositive=\(isPositive)]"
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTextPredicate.CaptureMatchesPatternParameters: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTextPredicate.CaptureMatchesPatternParameters captureIndex=\(captureIndex) pattern=\(pattern) isPositive=\(isPositive)]"

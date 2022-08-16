@@ -2,6 +2,7 @@ import CoreGraphics
 import CoreText
 import Foundation
 
+@available(iOS 14, *)
 private final class TypesetResult {
     let lineFragments: [LineFragment]
     let lineFragmentsMap: [LineFragmentID: Int]
@@ -14,6 +15,7 @@ private final class TypesetResult {
     }
 }
 
+@available(iOS 14, *)
 final class LineTypesetter {
     private enum TypesetEndCondition {
         case yPosition(_ targetYPosition: CGFloat)
@@ -110,7 +112,7 @@ final class LineTypesetter {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension LineTypesetter {
     private func updateState(from typesetResult: TypesetResult) {
         lineFragments.append(contentsOf: typesetResult.lineFragments)

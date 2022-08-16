@@ -1,22 +1,23 @@
 import CoreGraphics
 import Foundation
-
+@available(iOS 14.0, *)
 struct DocumentLineNodeID: RedBlackTreeNodeID, Hashable {
     let id = UUID()
     var rawValue: String {
         return id.uuidString
     }
 }
-
+@available(iOS 14.0, *)
 extension DocumentLineNodeID: CustomDebugStringConvertible {
     var debugDescription: String {
         return rawValue
     }
 }
-
+@available(iOS 14.0, *)
 typealias DocumentLineTree = RedBlackTree<DocumentLineNodeID, Int, DocumentLineNodeData>
+@available(iOS 14.0, *)
 typealias DocumentLineNode = RedBlackTreeNode<DocumentLineNodeID, Int, DocumentLineNodeData>
-
+@available(iOS 14.0, *)
 final class LineManager {
     var stringView: StringView
     var lineCount: Int {
@@ -276,7 +277,7 @@ final class LineManager {
         return RedBlackTreeIterator(tree: documentLineTree)
     }
 }
-
+@available(iOS 14.0, *)
 private extension LineManager {
     private func setLength(of line: DocumentLineNode, to newTotalLength: Int) -> LineChangeSet {
         var newLine: DocumentLineNode = line
@@ -344,7 +345,7 @@ private extension LineManager {
         return stringView.substring(in: range)
     }
 }
-
+@available(iOS 14.0, *)
 extension DocumentLineTree {
     func yPosition(of node: DocumentLineNode) -> CGFloat {
         var yPosition = node.left?.data.totalLineHeight ?? 0
@@ -361,7 +362,7 @@ extension DocumentLineTree {
         return yPosition
     }
 }
-
+@available(iOS 14.0, *)
 extension DocumentLineNode {
     var yPosition: CGFloat {
         return tree.yPosition(of: self)

@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14, *)
 final class TreeSitterLanguageLayer {
     typealias LayerAndNodeTuple = (layer: TreeSitterLanguageLayer, node: TreeSitterNode)
 
@@ -37,6 +38,7 @@ final class TreeSitterLanguageLayer {
 }
 
 // MARK: - Parsing
+@available(iOS 14.0, *)
 extension TreeSitterLanguageLayer {
     func parse(_ text: NSString) {
         let ranges = [tree?.rootNode.textRange].compactMap { $0 }
@@ -118,6 +120,7 @@ extension TreeSitterLanguageLayer {
 }
 
 // MARK: - Syntax Highlighting
+@available(iOS 14.0, *)
 extension TreeSitterLanguageLayer {
     func captures(in range: ByteRange) -> [TreeSitterCapture] {
         guard !range.isEmpty else {
@@ -145,6 +148,7 @@ extension TreeSitterLanguageLayer {
 }
 
 // MARK: - Child Language Layers
+@available(iOS 14.0, *)
 private extension TreeSitterLanguageLayer {
     @discardableResult
     private func childLanguageLayer(withID id: UnsafeRawPointer, forLanguageNamed languageName: String) -> TreeSitterLanguageLayer? {
@@ -204,6 +208,7 @@ private extension TreeSitterLanguageLayer {
 }
 
 // MARK: - TreeSitterInjectedLanguageMapperDelegate
+@available(iOS 14.0, *)
 extension TreeSitterLanguageLayer: TreeSitterInjectedLanguageMapperDelegate {
     func treeSitterInjectedLanguageMapper(_ mapper: TreeSitterInjectedLanguageMapper, textIn textRange: TreeSitterTextRange) -> String? {
         let byteRange = ByteRange(from: textRange.startByte, to: textRange.endByte)
@@ -213,6 +218,7 @@ extension TreeSitterLanguageLayer: TreeSitterInjectedLanguageMapperDelegate {
 }
 
 // MARK: - Debugging Language Layers
+@available(iOS 14.0, *)
 extension TreeSitterLanguageLayer {
     func languageHierarchyStringRepresentation() -> String {
         var str = ""
@@ -250,13 +256,13 @@ extension TreeSitterLanguageLayer {
         return str
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterLanguageLayer: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterLanguageLayer node=\(tree?.rootNode.debugDescription ?? "") childLanguageLayers=\(childLanguageLayers)]"
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterCapture {
     static func captureLayerSorting(_ lhs: TreeSitterCapture, _ rhs: TreeSitterCapture) -> Bool {
         // We sort the captures by three parameters:
@@ -278,7 +284,7 @@ private extension TreeSitterCapture {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterNode {
     func contains(_ point: TreeSitterTextPoint) -> Bool {
         let containsStart = point.row > startPoint.row || (point.row == startPoint.row && point.column >= startPoint.column)

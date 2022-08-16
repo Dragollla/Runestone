@@ -1,5 +1,6 @@
 import TreeSitter
 
+@available(iOS 14, *)
 final class TreeSitterInternalLanguage {
     let languagePointer: UnsafePointer<TSLanguage>
     let highlightsQuery: TreeSitterQuery?

@@ -1,5 +1,5 @@
 import UIKit
-
+@available(iOS 14.0, *)
 struct CachedHighlightRect {
     let id = UUID().uuidString
     let rect: CGRect

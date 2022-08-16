@@ -1,5 +1,5 @@
 import TreeSitter
-
+@available(iOS 14.0, *)
 final class TreeSitterQueryMatch {
     let captures: [TreeSitterCapture]
 
@@ -11,7 +11,7 @@ final class TreeSitterQueryMatch {
         return captures.first { $0.index == index }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterQueryMatch: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterQueryMatch captures=\(captures.count)]"

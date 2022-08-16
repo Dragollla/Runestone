@@ -3,6 +3,7 @@ import Foundation
 /// Encapsulates the bare informations needed to do syntax highlighting in a text view.
 ///
 /// It is recommended to create an instance of `TextViewState` on a background queue and pass it to a ``TextView`` instead of setting the text, theme and language on the text view separately.
+@available(iOS 14.0, *)
 public final class TextViewState {
     let stringView: StringView
     let theme: Theme
@@ -54,6 +55,7 @@ public final class TextViewState {
     }
 }
 
+@available(iOS 14.0, *)
 private extension TextViewState {
     private func prepare(with text: String) {
         let nsString = text as NSString

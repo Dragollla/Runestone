@@ -1,5 +1,6 @@
 import TreeSitter
 
+@available(iOS 14.0, *)
 final class TreeSitterInputEdit {
     let startByte: ByteCount
     let oldEndByte: ByteCount
@@ -22,14 +23,14 @@ final class TreeSitterInputEdit {
         self.newEndPoint = newEndPoint
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterInputEdit: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterInputEdit startByte=\(startByte) oldEndByte=\(oldEndByte) newEndByte=\(newEndByte)"
             + " startPoint=\(startPoint) oldEndPoint=\(oldEndPoint) newEndPoint=\(newEndPoint)]"
     }
 }
-
+@available(iOS 14.0, *)
 extension TSInputEdit {
     init(_ inputEdit: TreeSitterInputEdit) {
         self.init(start_byte: UInt32(inputEdit.startByte.value),

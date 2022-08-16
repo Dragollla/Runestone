@@ -2,6 +2,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 protocol LayoutManagerDelegate: AnyObject {
     func layoutManagerDidInvalidateContentSize(_ layoutManager: LayoutManager)
     func layoutManager(_ layoutManager: LayoutManager, didProposeContentOffsetAdjustment contentOffsetAdjustment: CGPoint)
@@ -10,6 +11,7 @@ protocol LayoutManagerDelegate: AnyObject {
 }
 
 // swiftlint:disable:next type_body_length
+@available(iOS 14.0, *)
 final class LayoutManager {
     weak var delegate: LayoutManagerDelegate?
     weak var scrollView: UIScrollView? {
@@ -454,6 +456,7 @@ final class LayoutManager {
 }
 
 // MARK: - UITextInput
+@available(iOS 14.0, *)
 extension LayoutManager {
     func caretRect(at location: Int) -> CGRect {
         let safeLocation = min(max(location, 0), stringView.string.length)
@@ -555,6 +558,7 @@ extension LayoutManager {
 }
 
 // MARK: - Layout
+@available(iOS 14.0, *)
 extension LayoutManager {
     func setNeedsLayout() {
         needsLayout = true
@@ -915,6 +919,7 @@ extension LayoutManager {
 }
 
 // MARK: - Line Movement
+@available(iOS 14.0, *)
 extension LayoutManager {
     func numberOfLineFragments(in line: DocumentLineNode) -> Int {
         return lineController(for: line).numberOfLineFragments
@@ -930,6 +935,7 @@ extension LayoutManager {
 }
 
 // MARK: - Marked Text
+@available(iOS 14.0, *)
 private extension LayoutManager {
     private func updateMarkedTextOnVisibleLines() {
         for lineID in visibleLineIDs {
@@ -946,6 +952,7 @@ private extension LayoutManager {
 }
 
 // MARK: - Highlight
+@available(iOS 14.0, *)
 private extension LayoutManager {
     private func recreateHighlightedRangesMap() {
         highlightedRangesMap.removeAll()
@@ -969,6 +976,7 @@ private extension LayoutManager {
 }
 
 // MARK: - Memory Management
+@available(iOS 14.0, *)
 private extension LayoutManager {
     @objc private func clearMemory() {
         let allLineIDs = Set(lineControllers.keys)
@@ -980,6 +988,7 @@ private extension LayoutManager {
 }
 
 // MARK: - LineControllerDelegate
+@available(iOS 14.0, *)
 extension LayoutManager: LineControllerDelegate {
     func lineSyntaxHighlighter(for lineController: LineController) -> LineSyntaxHighlighter? {
         let syntaxHighlighter = languageMode.createLineSyntaxHighlighter()

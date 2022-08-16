@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class ClosedRangeValueSearchQuery<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData>: RedBlackTreeSearchQuery {
     private let range: ClosedRange<NodeValue>
     private var cachedNodeLocations: [NodeID: NodeValue] = [:]
@@ -22,7 +22,7 @@ final class ClosedRangeValueSearchQuery<NodeID: RedBlackTreeNodeID, NodeValue: R
         return nodeLowerBound <= range.upperBound && range.lowerBound <= nodeUpperBound
     }
 }
-
+@available(iOS 14.0, *)
 private extension ClosedRangeValueSearchQuery {
     private func location(of node: RedBlackTreeNode<NodeID, NodeValue, NodeData>) -> NodeValue {
         if let cachedLocation = cachedNodeLocations[node.id] {

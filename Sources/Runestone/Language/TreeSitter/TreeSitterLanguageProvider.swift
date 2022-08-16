@@ -4,6 +4,7 @@ import Foundation
 ///
 /// Some languages contain other embedded languages. For example, an HTML document can contain CSS and JavaScript.
 /// When a ``TreeSitterLanguageMode`` encounters an embedded language, it expects that language to be provided on demand.
+@available(iOS 14.0, *)
 public protocol TreeSitterLanguageProvider: AnyObject {
     /// Called by ``TreeSitterLanguageMode`` when it encounters an embedded name.
     ///

@@ -1,10 +1,10 @@
 import Foundation
 import TreeSitter
-
+@available(iOS 14.0, *)
 protocol TreeSitterLanguageModeDelegate: AnyObject {
     func treeSitterLanguageMode(_ languageMode: TreeSitterInternalLanguageMode, bytesAt byteIndex: ByteCount) -> TreeSitterTextProviderResult?
 }
-
+@available(iOS 14.0, *)
 final class TreeSitterInternalLanguageMode: InternalLanguageMode {
     weak var delegate: TreeSitterLanguageModeDelegate?
     var canHighlight: Bool {
@@ -126,7 +126,7 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterInternalLanguageMode: TreeSitterParserDelegate {
     func parser(_ parser: TreeSitterParser, bytesAt byteIndex: ByteCount) -> TreeSitterTextProviderResult? {
         return delegate?.treeSitterLanguageMode(self, bytesAt: byteIndex)

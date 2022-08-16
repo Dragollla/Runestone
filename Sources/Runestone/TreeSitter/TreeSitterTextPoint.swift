@@ -1,5 +1,5 @@
 import TreeSitter
-
+@available(iOS 14.0, *)
 final class TreeSitterTextPoint {
     var row: UInt32 {
         return rawValue.row
@@ -18,7 +18,7 @@ final class TreeSitterTextPoint {
         self.rawValue = TSPoint(row: row, column: column)
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTextPoint: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTextPoint row=\(row) column=\(column)]"

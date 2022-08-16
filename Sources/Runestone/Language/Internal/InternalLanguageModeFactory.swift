@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 enum InternalLanguageModeFactory {
     static func internalLanguageMode(from languageMode: LanguageMode, stringView: StringView, lineManager: LineManager) -> InternalLanguageMode {
         switch languageMode {

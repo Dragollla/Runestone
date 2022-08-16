@@ -1,10 +1,12 @@
 import CoreGraphics
 import Foundation
 
+@available(iOS 14, *)
 struct LineFragmentNodeID: RedBlackTreeNodeID {
     let id = UUID()
 }
 
+@available(iOS 14, *)
 final class LineFragmentNodeData {
     var lineFragment: LineFragment?
     var lineFragmentHeight: CGFloat {
@@ -16,9 +18,9 @@ final class LineFragmentNodeData {
         self.lineFragment = lineFragment
     }
 }
-
+@available(iOS 14.0, *)
 typealias LineFragmentNode = RedBlackTreeNode<LineFragmentNodeID, Int, LineFragmentNodeData>
-
+@available(iOS 14.0, *)
 extension LineFragmentNode {
     func updateTotalLineFragmentHeight() {
         data.totalLineFragmentHeight = previous.data.totalLineFragmentHeight + data.lineFragmentHeight

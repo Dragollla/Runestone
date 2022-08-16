@@ -1,6 +1,7 @@
 // swiftlint:disable file_length
 import UIKit
 
+@available(iOS 14.0, *)
 protocol TextInputViewDelegate: AnyObject {
     func textInputViewWillBeginEditing(_ view: TextInputView)
     func textInputViewDidBeginEditing(_ view: TextInputView)
@@ -20,6 +21,7 @@ protocol TextInputViewDelegate: AnyObject {
 }
 
 // swiftlint:disable:next type_body_length
+@available(iOS 14.0, *)
 final class TextInputView: UIView, UITextInput {
     // MARK: - UITextInput
     var selectedTextRange: UITextRange? {
@@ -826,6 +828,7 @@ final class TextInputView: UIView, UITextInput {
 }
 
 // MARK: - Navigation
+@available(iOS 14.0, *)
 private extension TextInputView {
     private func handleKeyPressDuringMultistageTextInput(keyCode: UIKeyboardHIDUsage) {
         // When editing multistage text input (that is, we have a marked text) we let the user unmark the text
@@ -871,6 +874,7 @@ private extension TextInputView {
 }
 
 // MARK: - Layout
+@available(iOS 14.0, *)
 private extension TextInputView {
     private func layoutPageGuideIfNeeded() {
         if showPageGuide {
@@ -893,6 +897,7 @@ private extension TextInputView {
 }
 
 // MARK: - Floating Caret
+@available(iOS 14.0, *)
 extension TextInputView {
     func beginFloatingCursor(at point: CGPoint) {
         if floatingCaretView == nil, let position = closestPosition(to: point) {
@@ -936,6 +941,7 @@ extension TextInputView {
 }
 
 // MARK: - Rects
+@available(iOS 14.0, *)
 extension TextInputView {
     func caretRect(for position: UITextPosition) -> CGRect {
         guard let indexedPosition = position as? IndexedPosition else {
@@ -957,6 +963,7 @@ extension TextInputView {
 }
 
 // MARK: - Editing
+@available(iOS 14.0, *)
 extension TextInputView {
     func insertText(_ text: String) {
         let preparedText = prepareTextForInsertion(text)
@@ -1174,6 +1181,7 @@ extension TextInputView {
 }
 
 // MARK: - Selection
+@available(iOS 14.0, *)
 extension TextInputView {
     func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
         if let indexedRange = range as? IndexedRange {
@@ -1198,6 +1206,7 @@ extension TextInputView {
 }
 
 // MARK: - Indent and Outdent
+@available(iOS 14.0, *)
 extension TextInputView {
     func shiftLeft() {
         if let selectedRange = selectedRange {
@@ -1217,6 +1226,7 @@ extension TextInputView {
 }
 
 // MARK: - Move Lines
+@available(iOS 14.0, *)
 extension TextInputView {
     func moveSelectedLinesUp() {
         moveSelectedLine(byOffset: -1, undoActionName: L10n.Undo.ActionName.moveLinesUp)
@@ -1282,6 +1292,7 @@ extension TextInputView {
 }
 
 // MARK: - Marking
+@available(iOS 14.0, *)
 extension TextInputView {
     func setMarkedText(_ markedText: String?, selectedRange: NSRange) {
         guard let range = markedRange ?? self.selectedRange else {
@@ -1305,6 +1316,7 @@ extension TextInputView {
 }
 
 // MARK: - Ranges and Positions
+@available(iOS 14.0, *)
 extension TextInputView {
     func position(within range: UITextRange, farthestIn direction: UITextLayoutDirection) -> UITextPosition? {
         // This implementation seems to match the behavior of UITextView.
@@ -1425,6 +1437,7 @@ extension TextInputView {
 }
 
 // MARK: - Writing Direction
+@available(iOS 14.0, *)
 extension TextInputView {
     func baseWritingDirection(for position: UITextPosition, in direction: UITextStorageDirection) -> NSWritingDirection {
         return .natural
@@ -1434,6 +1447,7 @@ extension TextInputView {
 }
 
 // MARK: - UIEditMenuInteraction
+@available(iOS 14.0, *)
 extension TextInputView {
     func editMenu(for textRange: UITextRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
         return editMenuController.editMenu(for: textRange, suggestedActions: suggestedActions)
@@ -1455,6 +1469,7 @@ extension TextInputView {
 }
 
 // MARK: - TreeSitterLanguageModeDeleage
+@available(iOS 14.0, *)
 extension TextInputView: TreeSitterLanguageModeDelegate {
     func treeSitterLanguageMode(_ languageMode: TreeSitterInternalLanguageMode, bytesAt byteIndex: ByteCount) -> TreeSitterTextProviderResult? {
         guard byteIndex.value >= 0 && byteIndex < stringView.string.byteCount else {
@@ -1472,6 +1487,7 @@ extension TextInputView: TreeSitterLanguageModeDelegate {
 }
 
 // MARK: - LayoutManagerDelegate
+@available(iOS 14.0, *)
 extension TextInputView: LayoutManagerDelegate {
     func layoutManagerDidInvalidateContentSize(_ layoutManager: LayoutManager) {
         delegate?.textInputViewDidInvalidateContentSize(self)
@@ -1497,6 +1513,7 @@ extension TextInputView: LayoutManagerDelegate {
 }
 
 // MARK: - IndentControllerDelegate
+@available(iOS 14.0, *)
 extension TextInputView: IndentControllerDelegate {
     func indentController(_ controller: IndentController, shouldInsert text: String, in range: NSRange) {
         replaceText(in: range, with: text)
@@ -1510,6 +1527,7 @@ extension TextInputView: IndentControllerDelegate {
 }
 
 // MARK: - LineMovementControllerDelegate
+@available(iOS 14.0, *)
 extension TextInputView: LineMovementControllerDelegate {
     func lineMovementController(_ controller: LineMovementController, numberOfLineFragmentsIn line: DocumentLineNode) -> Int {
         return layoutManager.numberOfLineFragments(in: line)
@@ -1529,6 +1547,7 @@ extension TextInputView: LineMovementControllerDelegate {
 }
 
 // MARK: - EditMenuControllerDelegate
+@available(iOS 14.0, *)
 extension TextInputView: EditMenuControllerDelegate {
     func editMenuController(_ controller: EditMenuController, caretRectAt location: Int) -> CGRect {
         return caretRect(at: location)

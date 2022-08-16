@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 enum Caret {
     static let width: CGFloat = 3
 

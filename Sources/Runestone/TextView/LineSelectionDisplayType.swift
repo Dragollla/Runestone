@@ -1,6 +1,7 @@
 import Foundation
 
 /// Approach for highlighting the selected line.
+@available(iOS 14, *)
 public enum LineSelectionDisplayType {
     /// Do not highlight the selected line.
     case disabled
@@ -9,7 +10,7 @@ public enum LineSelectionDisplayType {
     /// Only highlight the selected line fragment. A line may span multiple line fragments if line wrapping is enabled.
     case lineFragment
 }
-
+@available(iOS 14, *)
 extension LineSelectionDisplayType {
     var shouldShowLineSelection: Bool {
         switch self {

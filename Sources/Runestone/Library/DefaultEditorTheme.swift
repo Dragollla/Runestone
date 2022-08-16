@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class DefaultTheme: Theme {
     fileprivate enum HighlightName: String {
         case `operator` = "operator"
@@ -75,6 +76,7 @@ final class DefaultTheme: Theme {
     }
 }
 
+@available(iOS 14.0, *)
 private extension DefaultTheme.HighlightName {
     init?(_ rawHighlightName: String) {
         // From the Tree-sitter documentation:

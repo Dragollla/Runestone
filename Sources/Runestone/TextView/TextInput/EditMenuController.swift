@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 protocol EditMenuControllerDelegate: AnyObject {
     func editMenuController(_ controller: EditMenuController, highlightedRangeFor range: NSRange) -> HighlightedRange?
     func editMenuController(_ controller: EditMenuController, canReplaceTextIn highlightedRange: HighlightedRange) -> Bool
@@ -8,6 +9,7 @@ protocol EditMenuControllerDelegate: AnyObject {
     func selectedRange(for controller: EditMenuController) -> NSRange?
 }
 
+@available(iOS 14.0, *)
 final class EditMenuController: NSObject {
     weak var delegate: EditMenuControllerDelegate?
 
@@ -57,7 +59,7 @@ final class EditMenuController: NSObject {
         return UIMenu(children: suggestedActions + [replaceAction])
     }
 }
-
+@available(iOS 14.0, *)
 private extension EditMenuController {
 #if compiler(>=5.7)
     @available(iOS 16, *)

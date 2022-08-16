@@ -7,6 +7,7 @@ import Foundation
 /// Replacing a batch of matches will only register a single undo operation.
 ///
 /// All ranges should be provided relative to the current text in the text view.
+@available(iOS 14, *)
 public struct BatchReplaceSet: Hashable {
     /// A range of text to replace and the text to replace that range with.
     public struct Replacement: Hashable {

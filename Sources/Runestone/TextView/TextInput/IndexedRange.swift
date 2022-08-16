@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class IndexedRange: UITextRange {
     let range: NSRange
     override var start: UITextPosition {

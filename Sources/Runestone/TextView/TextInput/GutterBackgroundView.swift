@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class GutterBackgroundView: UIView {
     var hairlineWidth: CGFloat = 1 {
         didSet {

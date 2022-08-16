@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class LinePosition: Hashable, Equatable {
     let row: Int
     let column: Int
@@ -24,7 +24,7 @@ final class LinePosition: Hashable, Equatable {
         hasher.combine(column)
     }
 }
-
+@available(iOS 14.0, *)
 extension LinePosition: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[LinePosition row=\(row) column=\(column)]"

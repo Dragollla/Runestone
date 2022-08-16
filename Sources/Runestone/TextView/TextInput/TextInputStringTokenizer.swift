@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class TextInputStringTokenizer: UITextInputStringTokenizer {
     private let lineManager: LineManager
     private let stringView: StringView
@@ -58,6 +59,7 @@ final class TextInputStringTokenizer: UITextInputStringTokenizer {
     }
 }
 
+@available(iOS 14.0, *)
 private extension TextInputStringTokenizer {
     private func isCustomWordBoundry(at location: Int) -> Bool {
         guard let character = stringView.character(at: location) else {

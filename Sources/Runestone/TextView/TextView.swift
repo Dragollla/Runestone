@@ -11,6 +11,7 @@ import UIKit
 ///
 /// When initially configuring the `TextView` with a theme, a language and the text to be shown, it is recommended to use the ``setState(_:addUndoAction:)`` function.
 /// The function takes an instance of ``TextViewState`` as input which can be created on a background queue to avoid blocking the main queue while doing the initial parse of a text.
+@available(iOS 14.0, *)
 open class TextView: UIScrollView {
     /// Delegate to receive callbacks for events triggered by the editor.
     public weak var editorDelegate: TextViewDelegate?
@@ -927,6 +928,7 @@ open class TextView: UIScrollView {
 }
 
 // MARK: - UITextInput
+@available(iOS 14.0, *)
 extension TextView {
     /// The range of currently marked text in a document.
     public var markedTextRange: UITextRange? {
@@ -1069,6 +1071,7 @@ extension TextView {
     }
 }
 
+@available(iOS 14.0, *)
 extension TextView {
     func scroll(to range: NSRange) {
         let upperCaretRect = textInputView.caretRect(at: range.upperBound)
@@ -1086,6 +1089,7 @@ extension TextView {
     }
 }
 
+@available(iOS 14.0, *)
 private extension TextView {
     @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         guard isSelectable else {
@@ -1247,6 +1251,7 @@ private extension TextView {
 }
 
 // MARK: - TextInputViewDelegate
+@available(iOS 14.0, *)
 extension TextView: TextInputViewDelegate {
     func textInputViewWillBeginEditing(_ view: TextInputView) {
         guard isEditable else {
@@ -1358,6 +1363,7 @@ extension TextView: TextInputViewDelegate {
 }
 
 // MARK: - HighlightNavigationControllerDelegate
+@available(iOS 14.0, *)
 extension TextView: HighlightNavigationControllerDelegate {
     func highlightNavigationController(_ controller: HighlightNavigationController,
                                        shouldNavigateTo highlightNavigationRange: HighlightNavigationRange) {
@@ -1380,6 +1386,7 @@ extension TextView: HighlightNavigationControllerDelegate {
 }
 
 // MARK: - SearchControllerDelegate
+@available(iOS 14.0, *)
 extension TextView: SearchControllerDelegate {
     func searchController(_ searchController: SearchController, linePositionAt location: Int) -> LinePosition? {
         return textInputView.lineManager.linePosition(at: location)
@@ -1387,6 +1394,7 @@ extension TextView: SearchControllerDelegate {
 }
 
 // MARK: - UIGestureRecognizerDelegate
+@available(iOS 14.0, *)
 extension TextView: UIGestureRecognizerDelegate {
     override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer === tapGestureRecognizer {
@@ -1409,6 +1417,7 @@ extension TextView: UIGestureRecognizerDelegate {
 }
 
 // MARK: - KeyboardObserverDelegate
+@available(iOS 14.0, *)
 extension TextView: KeyboardObserverDelegate {
     func keyboardObserver(_ keyboardObserver: KeyboardObserver,
                           keyboardWillShowWithHeight keyboardHeight: CGFloat,
@@ -1420,6 +1429,7 @@ extension TextView: KeyboardObserverDelegate {
 }
 
 // MARK: - UITextInteractionDelegate
+@available(iOS 14.0, *)
 extension TextView: UITextInteractionDelegate {
     public func interactionShouldBegin(_ interaction: UITextInteraction, at point: CGPoint) -> Bool {
         if interaction.textInteractionMode == .editable {

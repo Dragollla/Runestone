@@ -1,6 +1,7 @@
 import CoreGraphics
 import Foundation
 
+@available(iOS 14.0, *)
 final class PlainTextSyntaxHighlighter: LineSyntaxHighlighter {
     var theme: Theme = DefaultTheme()
     var kern: CGFloat = 0

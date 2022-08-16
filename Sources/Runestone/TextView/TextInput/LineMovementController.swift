@@ -1,5 +1,5 @@
 import UIKit
-
+@available(iOS 14.0, *)
 protocol LineMovementControllerDelegate: AnyObject {
     func lineMovementController(_ controller: LineMovementController, numberOfLineFragmentsIn line: DocumentLineNode) -> Int
     func lineMovementController(
@@ -11,7 +11,7 @@ protocol LineMovementControllerDelegate: AnyObject {
         lineFragmentNodeAtIndex index: Int,
         in line: DocumentLineNode) -> LineFragmentNode
 }
-
+@available(iOS 14.0, *)
 final class LineMovementController {
     weak var delegate: LineMovementControllerDelegate?
     var lineManager: LineManager
@@ -51,7 +51,7 @@ final class LineMovementController {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension LineMovementController {
     private func locationForMoving(fromLocation location: Int, by offset: Int) -> Int {
         let naiveNewLocation = location + offset

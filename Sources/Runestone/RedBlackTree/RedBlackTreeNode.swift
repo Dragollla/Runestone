@@ -1,11 +1,13 @@
 import Foundation
 
+@available(iOS 14.0, *)
 protocol RedBlackTreeNodeID: Identifiable, Hashable {
     init()
 }
 
 typealias RedBlackTreeNodeValue = Comparable & AdditiveArithmetic
 
+@available(iOS 14.0, *)
 final class RedBlackTreeNode<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData> {
     typealias Tree = RedBlackTree<NodeID, NodeValue, NodeData>
 
@@ -42,7 +44,7 @@ final class RedBlackTreeNode<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTree
         self.data = data
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTreeNode {
     var leftMost: RedBlackTreeNode {
         var node = self
@@ -85,7 +87,7 @@ extension RedBlackTreeNode {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTreeNode: Hashable {
     static func == (lhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>, rhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>) -> Bool {
         return lhs.id == rhs.id
@@ -95,13 +97,13 @@ extension RedBlackTreeNode: Hashable {
         hasher.combine(id)
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTreeNode where NodeData == Void {
     convenience init(tree: Tree, value: NodeValue) {
         self.init(tree: tree, value: value, data: ())
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTreeNode: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[RedBlackTreeNode index=\(index) location=\(location) nodeTotalCount=\(nodeTotalCount)]"

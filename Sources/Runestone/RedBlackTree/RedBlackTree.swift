@@ -1,7 +1,7 @@
 // swiftlint:disable file_length
 
 import Foundation
-
+@available(iOS 14.0, *)
 final class RedBlackTree<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData> {
     typealias Node = RedBlackTreeNode<NodeID, NodeValue, NodeData>
 
@@ -263,7 +263,7 @@ final class RedBlackTree<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNode
         return matches
     }
 }
-
+@available(iOS 14.0, *)
 private extension RedBlackTree {
     private func insert(_ newNode: Node, after node: Node) {
         if node.right == nil {
@@ -506,7 +506,7 @@ private extension RedBlackTree {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTree: CustomDebugStringConvertible {
     var debugDescription: String {
         return append(root, to: "", indent: 0)
@@ -535,7 +535,7 @@ extension RedBlackTree: CustomDebugStringConvertible {
         return result
     }
 }
-
+@available(iOS 14.0, *)
 extension RedBlackTree where NodeData == Void {
     convenience init(minimumValue: NodeValue, rootValue: NodeValue) {
         self.init(minimumValue: minimumValue, rootValue: rootValue, rootData: ())

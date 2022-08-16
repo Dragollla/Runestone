@@ -1,5 +1,6 @@
 import TreeSitter
 
+@available(iOS 14.0, *)
 final class TreeSitterTextRange {
     let rawValue: TSRange
     var startPoint: TreeSitterTextPoint {
@@ -23,7 +24,7 @@ final class TreeSitterTextRange {
             end_byte: UInt32(endByte.value))
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTextRange: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTextRange startByte=\(startByte) endByte=\(endByte) startPoint=\(startPoint) endPoint=\(endPoint)]"

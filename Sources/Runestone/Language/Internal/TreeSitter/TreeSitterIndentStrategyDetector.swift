@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 14.0, *)
 final class TreeSitterIndentStrategyDetector {
     private let lineManager: LineManager
     private let tree: TreeSitterTree
@@ -60,7 +61,7 @@ final class TreeSitterIndentStrategyDetector {
         return detectedStrategy
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterIndentStrategyDetector {
     private func numberOfSpacesAtBeginning(of line: DocumentLineNode, lineLocation: Int, lowestSpaceCount: Int) -> Int {
         var range = NSRange(location: lineLocation, length: 1)

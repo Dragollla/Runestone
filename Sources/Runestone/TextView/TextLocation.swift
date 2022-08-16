@@ -1,6 +1,7 @@
 import Foundation
 
 /// A location in the text.
+@available(iOS 14.0, *)
 public struct TextLocation: Hashable, Equatable {
     /// Zero-based line number.
     public let lineNumber: Int

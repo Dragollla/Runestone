@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14, *)
 final class LineFragmentView: UIView, ReusableView {
     var renderer: LineFragmentRenderer? {
         didSet {

@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class InvisibleCharacterConfiguration {
     var font: UIFont = .systemFont(ofSize: 12) {
         didSet {

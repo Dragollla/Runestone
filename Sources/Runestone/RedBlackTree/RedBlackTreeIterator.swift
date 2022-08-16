@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class RedBlackTreeIterator<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData>: IteratorProtocol, LazySequenceProtocol {
     private let tree: RedBlackTree<NodeID, NodeValue, NodeData>
     private var node: RedBlackTreeNode<NodeID, NodeValue, NodeData>?

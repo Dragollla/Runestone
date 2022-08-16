@@ -3,13 +3,16 @@ import CoreGraphics
 import CoreText
 import UIKit
 
+@available(iOS 14.0, *)
 typealias LineFragmentTree = RedBlackTree<LineFragmentNodeID, Int, LineFragmentNodeData>
 
+@available(iOS 14, *)
 protocol LineControllerDelegate: AnyObject {
     func lineSyntaxHighlighter(for lineController: LineController) -> LineSyntaxHighlighter?
     func lineControllerDidInvalidateLineWidthDuringAsyncSyntaxHighlight(_ lineController: LineController)
 }
 
+@available(iOS 14, *)
 final class LineController {
     private enum TypesetAmount {
         case inRect(CGRect)
@@ -189,7 +192,7 @@ final class LineController {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension LineController {
     private func prepareToDisplayString(_ typesetAmount: TypesetAmount, syntaxHighlightAsynchronously: Bool) {
         prepareString(syntaxHighlightAsynchronously: syntaxHighlightAsynchronously)
@@ -406,6 +409,7 @@ private extension LineController {
 }
 
 // MARK: - UITextInput
+@available(iOS 14.0, *)
 extension LineController {
     func caretRect(atIndex index: Int) -> CGRect {
         return textInputProxy.caretRect(atIndex: index)
@@ -421,6 +425,7 @@ extension LineController {
 }
 
 // MARK: - LineFragmentControllerDelegate
+@available(iOS 14.0, *)
 extension LineController: LineFragmentControllerDelegate {
     func string(in controller: LineFragmentController) -> String? {
         let lineFragment = controller.lineFragment

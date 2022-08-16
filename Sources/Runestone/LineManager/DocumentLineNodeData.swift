@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-
+@available(iOS 14.0, *)
 final class DocumentLineNodeData {
     var delimiterLength = 0 {
         didSet {
@@ -31,13 +31,13 @@ final class DocumentLineNodeData {
         self.lineHeight = lineHeight
     }
 }
-
+@available(iOS 14.0, *)
 private extension DocumentLineTree {
     func startByte(of node: Node) -> ByteCount {
         return offset(of: node, valueKeyPath: \.data.byteCount, totalValueKeyPath: \.data.nodeTotalByteCount, minimumValue: ByteCount(0))
     }
 }
-
+@available(iOS 14.0, *)
 extension DocumentLineNodeData: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[DocumentLineNodeData length=\(length) delimiterLength=\(delimiterLength) totalLength=\(totalLength)]"

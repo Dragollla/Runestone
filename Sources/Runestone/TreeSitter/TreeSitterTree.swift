@@ -1,5 +1,5 @@
 import TreeSitter
-
+@available(iOS 14.0, *)@available(iOS 14.0, *)
 final class TreeSitterTree {
     let pointer: OpaquePointer
     var rootNode: TreeSitterNode {
@@ -32,7 +32,7 @@ final class TreeSitterTree {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterTree: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterTree rootNode=\(rootNode)]"

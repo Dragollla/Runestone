@@ -1,6 +1,7 @@
 import UIKit
 
 /// Fonts and colors to be used by a `TextView`.
+@available(iOS 14.0, *)
 public protocol Theme: AnyObject {
     /// Default font of text in the text view.
     var font: UIFont { get }
@@ -64,6 +65,7 @@ public protocol Theme: AnyObject {
 #endif
 }
 
+@available(iOS 14.0, *)
 public extension Theme {
     var gutterHairlineWidth: CGFloat {
         return 1 / UIScreen.main.scale

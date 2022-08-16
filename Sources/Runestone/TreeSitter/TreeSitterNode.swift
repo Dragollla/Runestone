@@ -1,5 +1,5 @@
 import TreeSitter
-
+@available(iOS 14.0, *)
 final class TreeSitterNode {
     let rawValue: TSNode
     var expressionString: String? {
@@ -67,7 +67,7 @@ final class TreeSitterNode {
         }
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterNode {
     private func getRelationship(using f: (TSNode) -> TSNode) -> TreeSitterNode? {
         let node = f(rawValue)
@@ -78,7 +78,7 @@ private extension TreeSitterNode {
         }
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterNode: Hashable {
     static func == (lhs: TreeSitterNode, rhs: TreeSitterNode) -> Bool {
         return lhs.rawValue.id == rhs.rawValue.id
@@ -88,7 +88,7 @@ extension TreeSitterNode: Hashable {
         hasher.combine(rawValue.id)
     }
 }
-
+@available(iOS 14.0, *)
 extension TreeSitterNode: CustomDebugStringConvertible {
     var debugDescription: String {
         return "[TreeSitterNode startByte=\(startByte) endByte=\(endByte) startPoint=\(startPoint) endPoint=\(endPoint)]"

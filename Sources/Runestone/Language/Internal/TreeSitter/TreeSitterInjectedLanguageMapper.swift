@@ -1,9 +1,9 @@
 import Foundation
-
+@available(iOS 14.0, *)
 protocol TreeSitterInjectedLanguageMapperDelegate: AnyObject {
     func treeSitterInjectedLanguageMapper(_ mapper: TreeSitterInjectedLanguageMapper, textIn textRange: TreeSitterTextRange) -> String?
 }
-
+@available(iOS 14.0, *)
 final class TreeSitterInjectedLanguageMapper {
     weak var delegate: TreeSitterInjectedLanguageMapperDelegate?
 
@@ -44,7 +44,7 @@ final class TreeSitterInjectedLanguageMapper {
         return result
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterCapture {
     var isTextLanguageName: Bool {
         return name == "language"

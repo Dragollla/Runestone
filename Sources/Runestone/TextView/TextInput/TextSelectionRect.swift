@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class TextSelectionRect: UITextSelectionRect {
     override var rect: CGRect {
         return _rect

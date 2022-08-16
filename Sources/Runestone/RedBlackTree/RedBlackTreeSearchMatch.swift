@@ -1,5 +1,5 @@
 import Foundation
-
+@available(iOS 14.0, *)
 final class RedBlackTreeSearchMatch<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, Data> {
     typealias Node = RedBlackTreeNode<NodeID, NodeValue, Data>
 

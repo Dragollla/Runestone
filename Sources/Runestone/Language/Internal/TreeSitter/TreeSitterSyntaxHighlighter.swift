@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14, *)
 enum TreeSitterSyntaxHighlighterError: LocalizedError {
     case cancelled
     case operationDeallocated
@@ -14,6 +15,7 @@ enum TreeSitterSyntaxHighlighterError: LocalizedError {
     }
 }
 
+@available(iOS 14, *)
 final class TreeSitterSyntaxHighlighter: LineSyntaxHighlighter {
     var theme: Theme = DefaultTheme()
     var kern: CGFloat = 0
@@ -79,7 +81,7 @@ final class TreeSitterSyntaxHighlighter: LineSyntaxHighlighter {
         currentOperation = nil
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterSyntaxHighlighter {
     private func setAttributes(for tokens: [TreeSitterSyntaxHighlightToken], on attributedString: NSMutableAttributedString) {
         attributedString.beginEditing()
@@ -142,7 +144,7 @@ private extension TreeSitterSyntaxHighlighter {
         return tokens
     }
 }
-
+@available(iOS 14.0, *)
 private extension TreeSitterSyntaxHighlighter {
     private func token(from capture: TreeSitterCapture, in byteRange: ByteRange) -> TreeSitterSyntaxHighlightToken {
         let range = NSRange(byteRange)
@@ -153,7 +155,7 @@ private extension TreeSitterSyntaxHighlighter {
         return TreeSitterSyntaxHighlightToken(range: range, textColor: textColor, shadow: shadow, font: font, fontTraits: fontTraits)
     }
 }
-
+@available(iOS 14.0, *)
 private extension UIFont {
     func withSymbolicTraits(_ symbolicTraits: UIFontDescriptor.SymbolicTraits) -> UIFont? {
         if let newFontDescriptor = fontDescriptor.withSymbolicTraits(symbolicTraits) {
