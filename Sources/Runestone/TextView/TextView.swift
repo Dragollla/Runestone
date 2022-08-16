@@ -1396,13 +1396,13 @@ extension TextView: SearchControllerDelegate {
 // MARK: - UIGestureRecognizerDelegate
 @available(iOS 14.0, *)
 extension TextView: UIGestureRecognizerDelegate {
-    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer === tapGestureRecognizer {
-            return !isEditing && !isDragging && !isDecelerating && delegateAllowsEditingToBegin
-        } else {
-            return super.gestureRecognizerShouldBegin(gestureRecognizer)
-        }
-    }
+//    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if gestureRecognizer === tapGestureRecognizer {
+//            return !isEditing && !isDragging && !isDecelerating && delegateAllowsEditingToBegin
+//        } else {
+//            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+//        }
+//    }
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                   shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
