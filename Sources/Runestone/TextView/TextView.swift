@@ -1103,8 +1103,10 @@ private extension TextView {
                 layoutIfNeeded()
                 editorDelegate?.textViewDidChangeSelection(self)
             }
+          if isEditable {
             installEditableInteraction()
             becomeFirstResponder()
+          }
         }
     }
 
@@ -1368,7 +1370,7 @@ extension TextView: HighlightNavigationControllerDelegate {
     func highlightNavigationController(_ controller: HighlightNavigationController,
                                        shouldNavigateTo highlightNavigationRange: HighlightNavigationRange) {
         let range = highlightNavigationRange.range
-        _ = textInputView.becomeFirstResponder()
+//        _ = textInputView.becomeFirstResponder()
         // Layout lines up until the location of the range so we can scroll to it immediately after.
         textInputView.layoutLines(toLocation: range.upperBound)
         scroll(to: range)
