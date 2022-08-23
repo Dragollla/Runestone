@@ -218,7 +218,7 @@ open class TextView: UIScrollView {
     }
     /// Returns a Boolean value indicating whether this object can become the first responder.
     override public var canBecomeFirstResponder: Bool {
-        return !textInputView.isFirstResponder && isEditable
+        return !textInputView.isFirstResponder && (isEditable || isSelectable)
     }
     /// The text view's background color.
     override public var backgroundColor: UIColor? {
@@ -587,7 +587,7 @@ open class TextView: UIScrollView {
     private let _inputAssistantItem = UITextInputAssistantItem()
     private var isPerformingNonEditableTextInteraction = false
     private var delegateAllowsEditingToBegin: Bool {
-        guard isEditable else {
+        guard isEditable || isSelectable else {
             return false
         }
         if let editorDelegate = editorDelegate {
@@ -1106,6 +1106,8 @@ private extension TextView {
           if isEditable {
             installEditableInteraction()
             becomeFirstResponder()
+          } else if isSelectable {
+            installNonEditableInteraction()
           }
         }
     }
@@ -1256,7 +1258,7 @@ private extension TextView {
 @available(iOS 14.0, *)
 extension TextView: TextInputViewDelegate {
     func textInputViewWillBeginEditing(_ view: TextInputView) {
-        guard isEditable else {
+        guard isEditable || isSelectable else {
             return
         }
         isEditing = !isPerformingNonEditableTextInteraction
@@ -1270,7 +1272,7 @@ extension TextView: TextInputViewDelegate {
             textInputView.layoutIfNeeded()
         }
         // The editable interaction must be installed early in the -becomeFirstResponder() call
-        if !isPerformingNonEditableTextInteraction {
+        if !isPerformingNonEditableTextInteraction && isEditable {
             installEditableInteraction()
         }
     }
@@ -1323,6 +1325,9 @@ extension TextView: TextInputViewDelegate {
     }
 
     func textInputView(_ view: TextInputView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+      guard isEditable else {
+        return false
+      }
         if let characterPair = characterPairs.first(where: { $0.trailing == text }), skipInsertingTrailingComponent(of: characterPair, in: range) {
             return false
         } else if let characterPair = characterPairs.first(where: { $0.leading == text }), insertLeadingComponent(of: characterPair, in: range) {
@@ -1370,7 +1375,8 @@ extension TextView: HighlightNavigationControllerDelegate {
     func highlightNavigationController(_ controller: HighlightNavigationController,
                                        shouldNavigateTo highlightNavigationRange: HighlightNavigationRange) {
         let range = highlightNavigationRange.range
-//        _ = textInputView.becomeFirstResponder()
+        installEditableInteraction()
+        _ = textInputView.becomeFirstResponder()
         // Layout lines up until the location of the range so we can scroll to it immediately after.
         textInputView.layoutLines(toLocation: range.upperBound)
         scroll(to: range)
