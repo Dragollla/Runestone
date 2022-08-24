@@ -582,11 +582,11 @@ open class TextView: UIScrollView {
     }
     private var _editMenuInteraction: Any?
 #endif
-    private let tapGestureRecognizer = QuickTapGestureRecognizer()
+    let tapGestureRecognizer = QuickTapGestureRecognizer()
     private var _inputAccessoryView: UIView?
     private let _inputAssistantItem = UITextInputAssistantItem()
     private var isPerformingNonEditableTextInteraction = false
-    private var delegateAllowsEditingToBegin: Bool {
+    var delegateAllowsEditingToBegin: Bool {
         guard isEditable || isSelectable else {
             return false
         }
@@ -612,7 +612,7 @@ open class TextView: UIScrollView {
     // to the selected text range and scroll the text view when the handles approach the bottom.
     // The approach is based on the one described in Steve Shephard's blog post "Adventures with UITextInteraction".
     // https://steveshepard.com/blog/adventures-with-uitextinteraction/
-    private var textRangeAdjustmentGestureRecognizers: Set<UIGestureRecognizer> = []
+    var textRangeAdjustmentGestureRecognizers: Set<UIGestureRecognizer> = []
     private var previousSelectedRangeDuringGestureHandling: NSRange?
     private var preferredContentSize: CGSize {
         let horizontalOverscrollLength = max(frame.width * horizontalOverscrollFactor, 0)
@@ -636,7 +636,7 @@ open class TextView: UIScrollView {
         editableTextInteraction.delegate = self
         nonEditableTextInteraction.delegate = self
         addSubview(textInputView)
-        tapGestureRecognizer.delegate = self
+        tapGestureRecognizer.delegate = GestureRecognizer(self)
         tapGestureRecognizer.addTarget(self, action: #selector(handleTap(_:)))
         addGestureRecognizer(tapGestureRecognizer)
         installNonEditableInteraction()
@@ -671,8 +671,7 @@ open class TextView: UIScrollView {
     /// Asks UIKit to make this object the first responder in its window.
     @discardableResult
     override open func becomeFirstResponder() -> Bool {
-        if !isEditing && delegateAllowsEditingToBegin {
-            _ = textInputView.resignFirstResponder()
+        if !isEditing && delegateAllowsEditingToBegin && !textInputView.isFirstResponder {
             _ = textInputView.becomeFirstResponder()
             return true
         } else {
@@ -683,11 +682,7 @@ open class TextView: UIScrollView {
     /// Notifies this object that it has been asked to relinquish its status as first responder in its window.
     @discardableResult
     override open func resignFirstResponder() -> Bool {
-        if isEditing && shouldEndEditing {
-            return textInputView.resignFirstResponder()
-        } else {
-            return false
-        }
+      return textInputView.resignFirstResponder()
     }
 
     /// Updates the custom input and accessory views when the object is the first responder.
@@ -1105,14 +1100,12 @@ private extension TextView {
             }
           if isEditable {
             installEditableInteraction()
-            becomeFirstResponder()
-          } else if isSelectable {
-            installNonEditableInteraction()
           }
+          becomeFirstResponder()
         }
     }
 
-    @objc private func handleTextRangeAdjustmentPan(_ gestureRecognizer: UIPanGestureRecognizer) {
+    @objc func handleTextRangeAdjustmentPan(_ gestureRecognizer: UIPanGestureRecognizer) {
         // This function scroll the text view when the selected range is adjusted.
         if gestureRecognizer.state == .began {
             previousSelectedRangeDuringGestureHandling = selectedRange
@@ -1261,7 +1254,7 @@ extension TextView: TextInputViewDelegate {
         guard isEditable || isSelectable else {
             return
         }
-        isEditing = !isPerformingNonEditableTextInteraction
+        isEditing = !isPerformingNonEditableTextInteraction && isEditable
         // If a developer is programmatically calling becomeFirstresponder() then we might not have a selected range.
         // We set the selectedRange instead of the selectedTextRange to avoid invoking any delegates.
         if textInputView.selectedRange == nil && !isPerformingNonEditableTextInteraction {
@@ -1376,7 +1369,8 @@ extension TextView: HighlightNavigationControllerDelegate {
                                        shouldNavigateTo highlightNavigationRange: HighlightNavigationRange) {
         let range = highlightNavigationRange.range
         installEditableInteraction()
-        _ = textInputView.becomeFirstResponder()
+        becomeFirstResponder()
+        installNonEditableInteraction()
         // Layout lines up until the location of the range so we can scroll to it immediately after.
         textInputView.layoutLines(toLocation: range.upperBound)
         scroll(to: range)
@@ -1401,27 +1395,32 @@ extension TextView: SearchControllerDelegate {
     }
 }
 
-// MARK: - UIGestureRecognizerDelegate
 @available(iOS 14.0, *)
-extension TextView: UIGestureRecognizerDelegate {
-//    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if gestureRecognizer === tapGestureRecognizer {
-//            return !isEditing && !isDragging && !isDecelerating && delegateAllowsEditingToBegin
-//        } else {
-//            return super.gestureRecognizerShouldBegin(gestureRecognizer)
-//        }
-//    }
-
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if let klass = NSClassFromString("UITextRangeAdjustmentGestureRecognizer") {
-            if !textRangeAdjustmentGestureRecognizers.contains(otherGestureRecognizer) && otherGestureRecognizer.isKind(of: klass) {
-                otherGestureRecognizer.addTarget(self, action: #selector(handleTextRangeAdjustmentPan(_:)))
-                textRangeAdjustmentGestureRecognizers.insert(otherGestureRecognizer)
-            }
-        }
-        return gestureRecognizer !== panGestureRecognizer
+class GestureRecognizer: NSObject, UIGestureRecognizerDelegate {
+  let textView: TextView
+  
+  init(_ textView: TextView) {
+    self.textView = textView
+  }
+  
+  public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    if gestureRecognizer === textView.tapGestureRecognizer {
+      return !textView.isEditing && !textView.isDragging && !textView.isDecelerating && textView.delegateAllowsEditingToBegin
+    } else {
+      return textView.gestureRecognizerShouldBegin(gestureRecognizer)
     }
+  }
+  
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    if let klass = NSClassFromString("UITextRangeAdjustmentGestureRecognizer") {
+      if !textView.textRangeAdjustmentGestureRecognizers.contains(otherGestureRecognizer) && otherGestureRecognizer.isKind(of: klass) {
+        otherGestureRecognizer.addTarget(textView, action: #selector(textView.handleTextRangeAdjustmentPan(_:)))
+        textView.textRangeAdjustmentGestureRecognizers.insert(otherGestureRecognizer)
+      }
+    }
+    return gestureRecognizer !== textView.panGestureRecognizer
+  }
 }
 
 // MARK: - KeyboardObserverDelegate

@@ -677,7 +677,7 @@ final class TextInputView: UIView, UITextInput {
         } else if action == #selector(selectAll(_:)) {
             return true
         } else if action == #selector(replace(_:)) {
-            return true
+            return isEditing
         } else if action == NSSelectorFromString("replaceTextInSelectedHighlightedRange") {
             if let selectedRange = selectedRange, let highlightedRange = highlightedRange(for: selectedRange) {
                 return delegate?.textInputView(self, canReplaceTextIn: highlightedRange) ?? false
