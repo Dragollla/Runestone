@@ -40,6 +40,14 @@ open class TextView: UIScrollView {
                 resignFirstResponder()
                 textInputViewDidEndEditing(textInputView)
             }
+            if isEditable {
+              gestureRecognizerDelegate = GestureRecognizer(self)
+              tapGestureRecognizer.delegate = gestureRecognizerDelegate
+            } else {
+              gestureRecognizerDelegate = nil
+              // for some reason `nil` not working correctly here
+              tapGestureRecognizer.delegate = GestureRecognizer(self)
+            }
         }
     }
     /// A Boolean value that indicates whether the text view is selectable.
@@ -622,7 +630,8 @@ open class TextView: UIScrollView {
         let height = baseContentSize.height + verticalOverscrollLength
         return CGSize(width: width, height: height)
     }
-
+  
+    private var gestureRecognizerDelegate: GestureRecognizer?
     /// Create a new text view.
     /// - Parameter frame: The frame rectangle of the text view.
     override public init(frame: CGRect) {
@@ -636,7 +645,8 @@ open class TextView: UIScrollView {
         editableTextInteraction.delegate = self
         nonEditableTextInteraction.delegate = self
         addSubview(textInputView)
-        tapGestureRecognizer.delegate = GestureRecognizer(self)
+        gestureRecognizerDelegate = GestureRecognizer(self)
+        tapGestureRecognizer.delegate = gestureRecognizerDelegate
         tapGestureRecognizer.addTarget(self, action: #selector(handleTap(_:)))
         addGestureRecognizer(tapGestureRecognizer)
         installNonEditableInteraction()
@@ -1370,7 +1380,9 @@ extension TextView: HighlightNavigationControllerDelegate {
         let range = highlightNavigationRange.range
         installEditableInteraction()
         becomeFirstResponder()
-        installNonEditableInteraction()
+        if !isEditable {
+          installNonEditableInteraction()
+        }
         // Layout lines up until the location of the range so we can scroll to it immediately after.
         textInputView.layoutLines(toLocation: range.upperBound)
         scroll(to: range)
