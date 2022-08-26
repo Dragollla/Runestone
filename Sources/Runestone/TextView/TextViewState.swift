@@ -1,4 +1,5 @@
 import Foundation
+import CoreGraphics
 
 /// Encapsulates the bare informations needed to do syntax highlighting in a text view.
 ///
@@ -9,6 +10,12 @@ public final class TextViewState {
     let theme: Theme
     let lineManager: LineManager
     let languageMode: InternalLanguageMode
+  
+  public var textHeight: CGFloat {
+    get {
+      return lineManager.contentHeight
+    }
+  }
 
     /// Indent strategy detected in the text.
     ///
