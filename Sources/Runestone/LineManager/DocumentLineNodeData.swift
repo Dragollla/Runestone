@@ -1,7 +1,7 @@
 import CoreGraphics
 import Foundation
 @available(iOS 14.0, *)
-final class DocumentLineNodeData {
+public final class DocumentLineNodeData {
     var delimiterLength = 0 {
         didSet {
             assert(delimiterLength >= 0 && delimiterLength <= 2)
@@ -39,7 +39,7 @@ private extension DocumentLineTree {
 }
 @available(iOS 14.0, *)
 extension DocumentLineNodeData: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return "[DocumentLineNodeData length=\(length) delimiterLength=\(delimiterLength) totalLength=\(totalLength)]"
     }
 }

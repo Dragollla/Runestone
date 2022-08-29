@@ -1,14 +1,17 @@
 import Foundation
 
 @available(iOS 14.0, *)
-final class PlainTextInternalLanguageMode: InternalLanguageMode {
-    func parse(_ text: NSString) {}
+public final class PlainTextInternalLanguageMode: InternalLanguageMode {
+    
+  public init() {}
+    
+    public func parse(_ text: NSString) {}
 
-    func parse(_ text: NSString, completion: @escaping ((Bool) -> Void)) {
+    public func parse(_ text: NSString, completion: @escaping ((Bool) -> Void)) {
         completion(true)
     }
 
-    func textDidChange(_ change: TextChange) -> LineChangeSet {
+    public func textDidChange(_ change: TextChange) -> LineChangeSet {
         return LineChangeSet()
     }
 
@@ -16,7 +19,7 @@ final class PlainTextInternalLanguageMode: InternalLanguageMode {
         return nil
     }
 
-    func createLineSyntaxHighlighter() -> LineSyntaxHighlighter {
+    public func createLineSyntaxHighlighter() -> LineSyntaxHighlighter {
         return PlainTextSyntaxHighlighter()
     }
 
@@ -24,22 +27,22 @@ final class PlainTextInternalLanguageMode: InternalLanguageMode {
         return nil
     }
 
-    func syntaxNode(at linePosition: LinePosition) -> SyntaxNode? {
+    public func syntaxNode(at linePosition: LinePosition) -> SyntaxNode? {
         return nil
     }
 
-    func currentIndentLevel(of line: DocumentLineNode, using indentStrategy: IndentStrategy) -> Int {
+    public func currentIndentLevel(of line: DocumentLineNode, using indentStrategy: IndentStrategy) -> Int {
         return 0
     }
 
-    func strategyForInsertingLineBreak(
+    public func strategyForInsertingLineBreak(
         from startLinePosition: LinePosition,
         to endLinePosition: LinePosition,
         using indentStrategy: IndentStrategy) -> InsertLineBreakIndentStrategy {
         return InsertLineBreakIndentStrategy(indentLevel: 0, insertExtraLineBreak: false)
     }
 
-    func detectIndentStrategy() -> DetectedIndentStrategy {
+    public func detectIndentStrategy() -> DetectedIndentStrategy {
         return .unknown
     }
 }

@@ -12,7 +12,7 @@ protocol LayoutManagerDelegate: AnyObject {
 
 // swiftlint:disable:next type_body_length
 @available(iOS 14.0, *)
-final class LayoutManager {
+public final class LayoutManager {
     weak var delegate: LayoutManagerDelegate?
     weak var scrollView: UIScrollView? {
         didSet {
@@ -28,7 +28,7 @@ final class LayoutManager {
             }
         }
     }
-    var lineManager: LineManager {
+    public var lineManager: LineManager {
         didSet {
             if lineManager !== oldValue {
                 shouldResetLineWidths = true
@@ -36,7 +36,7 @@ final class LayoutManager {
         }
     }
     var stringView: StringView
-    var scrollViewWidth: CGFloat = 0 {
+    public var scrollViewWidth: CGFloat = 0 {
         didSet {
             if scrollViewWidth != oldValue {
                 if isLineWrappingEnabled {
@@ -46,8 +46,8 @@ final class LayoutManager {
             }
         }
     }
-    var viewport: CGRect = .zero
-    var contentSize: CGSize {
+    public var viewport: CGRect = .zero
+    public var contentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
     var languageMode: InternalLanguageMode {
@@ -60,7 +60,7 @@ final class LayoutManager {
             }
         }
     }
-    var theme: Theme = DefaultTheme() {
+    public var theme: Theme = DefaultTheme() {
         didSet {
             if theme !== oldValue {
                 gutterBackgroundView.backgroundColor = theme.gutterBackgroundColor
@@ -116,7 +116,7 @@ final class LayoutManager {
         }
     }
     var invisibleCharacterConfiguration = InvisibleCharacterConfiguration()
-    var tabWidth: CGFloat = 10 {
+    public var tabWidth: CGFloat = 10 {
         didSet {
             if tabWidth != oldValue {
                 invalidateContentSize()
@@ -240,7 +240,7 @@ final class LayoutManager {
     private var contentHeight: CGFloat {
         return ceil(textContentHeight + textContainerInset.top + textContainerInset.bottom)
     }
-    private var textContentWidth: CGFloat {
+    var textContentWidth: CGFloat {
         if let textContentWidth = _textContentWidth {
             return textContentWidth
         } else if let lineIDTrackingWidth = lineIDTrackingWidth, let lineWidth = lineWidths[lineIDTrackingWidth] {
@@ -266,7 +266,7 @@ final class LayoutManager {
             return textContentWidth
         }
     }
-    private var textContentHeight: CGFloat {
+    var textContentHeight: CGFloat {
         if let contentHeight = _textContentHeight {
             return contentHeight
         } else {
@@ -334,7 +334,7 @@ final class LayoutManager {
         }
     }
 
-    init(lineManager: LineManager, languageMode: InternalLanguageMode, stringView: StringView) {
+    public init(lineManager: LineManager, languageMode: InternalLanguageMode, stringView: StringView) {
         self.lineManager = lineManager
         self.languageMode = languageMode
         self.stringView = stringView
@@ -560,11 +560,11 @@ extension LayoutManager {
 // MARK: - Layout
 @available(iOS 14.0, *)
 extension LayoutManager {
-    func setNeedsLayout() {
+    public func setNeedsLayout() {
         needsLayout = true
     }
 
-    func layoutIfNeeded() {
+    public func layoutIfNeeded() {
         if needsLayout {
             needsLayout = false
             CATransaction.begin()

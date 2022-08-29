@@ -1,24 +1,27 @@
 import CoreGraphics
 import Foundation
+import UIKit
+
 @available(iOS 14.0, *)
-struct DocumentLineNodeID: RedBlackTreeNodeID, Hashable {
-    let id = UUID()
+public struct DocumentLineNodeID: RedBlackTreeNodeID, Hashable {
+    public init() {}
+    public let id = UUID()
     var rawValue: String {
         return id.uuidString
     }
 }
 @available(iOS 14.0, *)
 extension DocumentLineNodeID: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return rawValue
     }
 }
 @available(iOS 14.0, *)
 typealias DocumentLineTree = RedBlackTree<DocumentLineNodeID, Int, DocumentLineNodeData>
 @available(iOS 14.0, *)
-typealias DocumentLineNode = RedBlackTreeNode<DocumentLineNodeID, Int, DocumentLineNodeData>
+public typealias DocumentLineNode = RedBlackTreeNode<DocumentLineNodeID, Int, DocumentLineNodeData>
 @available(iOS 14.0, *)
-final class LineManager {
+public final class LineManager {
     var stringView: StringView
     var lineCount: Int {
         return documentLineTree.nodeTotalCount
@@ -27,7 +30,7 @@ final class LineManager {
         let rightMost = documentLineTree.root.rightMost
         return rightMost.yPosition + rightMost.data.lineHeight
     }
-    var estimatedLineHeight: CGFloat = 12
+    public var estimatedLineHeight: CGFloat = 12
     var firstLine: DocumentLineNode {
         return documentLineTree.root.leftMost
     }
@@ -41,7 +44,7 @@ final class LineManager {
 
     private let documentLineTree: DocumentLineTree
 
-    init(stringView: StringView) {
+    public init(stringView: StringView) {
         self.stringView = stringView
         let rootData = DocumentLineNodeData(lineHeight: estimatedLineHeight)
         documentLineTree = DocumentLineTree(minimumValue: 0, rootValue: 0, rootData: rootData)
@@ -49,7 +52,7 @@ final class LineManager {
         rootData.node = documentLineTree.root
     }
 
-    func rebuild(from string: NSString) {
+    public func rebuild(from string: NSString) {
         // Reset the tree so we only have a single line.
         let rootData = DocumentLineNodeData(lineHeight: estimatedLineHeight)
         documentLineTree.reset(rootValue: 0, rootData: rootData)

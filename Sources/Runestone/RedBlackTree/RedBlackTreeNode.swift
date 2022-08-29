@@ -1,14 +1,14 @@
 import Foundation
 
 @available(iOS 14.0, *)
-protocol RedBlackTreeNodeID: Identifiable, Hashable {
+public protocol RedBlackTreeNodeID: Identifiable, Hashable {
     init()
 }
 
-typealias RedBlackTreeNodeValue = Comparable & AdditiveArithmetic
+public typealias RedBlackTreeNodeValue = Comparable & AdditiveArithmetic
 
 @available(iOS 14.0, *)
-final class RedBlackTreeNode<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData> {
+public final class RedBlackTreeNode<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNodeValue, NodeData> {
     typealias Tree = RedBlackTree<NodeID, NodeValue, NodeData>
 
     let id = NodeID()
@@ -89,11 +89,11 @@ extension RedBlackTreeNode {
 }
 @available(iOS 14.0, *)
 extension RedBlackTreeNode: Hashable {
-    static func == (lhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>, rhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>) -> Bool {
+    public static func == (lhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>, rhs: RedBlackTreeNode<NodeID, NodeValue, NodeData>) -> Bool {
         return lhs.id == rhs.id
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
@@ -105,7 +105,7 @@ extension RedBlackTreeNode where NodeData == Void {
 }
 @available(iOS 14.0, *)
 extension RedBlackTreeNode: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return "[RedBlackTreeNode index=\(index) location=\(location) nodeTotalCount=\(nodeTotalCount)]"
     }
 }

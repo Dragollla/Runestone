@@ -13,7 +13,7 @@ final class StringViewBytesResult {
 }
 
 @available(iOS 14.0, *)
-final class StringView {
+public final class StringView {
     var string: NSString {
         get {
             return internalString
@@ -41,11 +41,11 @@ final class StringView {
 
     private var _swiftString: String?
 
-    init(string: NSMutableString = NSMutableString()) {
+    public init(string: NSMutableString = NSMutableString()) {
         self.internalString = string
     }
 
-    convenience init(string: String) {
+    public convenience init(string: String) {
         self.init(string: NSMutableString(string: string))
     }
 

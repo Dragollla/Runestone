@@ -1,6 +1,6 @@
 import Foundation
 @available(iOS 14.0, *)
-final class LineChangeSet {
+public final class LineChangeSet {
     private(set) var insertedLines: Set<DocumentLineNode> = []
     private(set) var removedLines: Set<DocumentLineNode> = []
     private(set) var editedLines: Set<DocumentLineNode> = []
@@ -31,7 +31,7 @@ final class LineChangeSet {
 }
 @available(iOS 14.0, *)
 extension LineChangeSet: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return "[LineChangeSet insertedLines=\(insertedLines) removedLines=\(removedLines) editedLines=\(editedLines)]"
     }
 }

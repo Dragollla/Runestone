@@ -8,7 +8,7 @@ extension NSAttributedString.Key {
 struct LineSyntaxHiglighterSetAttributesResult {
     let isSizingInvalid: Bool
 }
-final class LineSyntaxHighlighterInput {
+public final class LineSyntaxHighlighterInput {
     let attributedString: NSMutableAttributedString
     let byteRange: ByteRange
 
@@ -18,7 +18,7 @@ final class LineSyntaxHighlighterInput {
     }
 }
 @available(iOS 14.0, *)
-protocol LineSyntaxHighlighter: AnyObject {
+public protocol LineSyntaxHighlighter: AnyObject {
     typealias AsyncCallback = (Result<Void, Error>) -> Void
     var theme: Theme { get set }
     var kern: CGFloat { get set }

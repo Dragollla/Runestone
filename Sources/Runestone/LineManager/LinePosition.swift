@@ -1,6 +1,6 @@
 import Foundation
 @available(iOS 14.0, *)
-final class LinePosition: Hashable, Equatable {
+public final class LinePosition: Hashable, Equatable {
     let row: Int
     let column: Int
 
@@ -15,18 +15,18 @@ final class LinePosition: Hashable, Equatable {
         self.init(row: row, column: column)
     }
 
-    static func == (lhs: LinePosition, rhs: LinePosition) -> Bool {
+    public static func == (lhs: LinePosition, rhs: LinePosition) -> Bool {
         return lhs.row == rhs.row && lhs.column == rhs.column
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(row)
         hasher.combine(column)
     }
 }
 @available(iOS 14.0, *)
 extension LinePosition: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return "[LinePosition row=\(row) column=\(column)]"
     }
 }
