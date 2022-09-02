@@ -210,11 +210,11 @@ open class TextView: UIScrollView {
     /// The custom input accessory view to display when the receiver becomes the first responder.
     override public var inputAccessoryView: UIView? {
         get {
-            if isInputAccessoryViewEnabled {
+//            if isInputAccessoryViewEnabled {
                 return _inputAccessoryView
-            } else {
-                return nil
-            }
+//            } else {
+//                return nil
+//            }
         }
         set {
             _inputAccessoryView = newValue
