@@ -210,11 +210,11 @@ open class TextView: UIScrollView {
     /// The custom input accessory view to display when the receiver becomes the first responder.
     override public var inputAccessoryView: UIView? {
         get {
-//            if isInputAccessoryViewEnabled {
+            if isInputAccessoryViewEnabled {
                 return _inputAccessoryView
-//            } else {
-//                return nil
-//            }
+            } else {
+                return nil
+            }
         }
         set {
             _inputAccessoryView = newValue
@@ -683,6 +683,7 @@ open class TextView: UIScrollView {
     override open func becomeFirstResponder() -> Bool {
         if !isEditing && delegateAllowsEditingToBegin && !textInputView.isFirstResponder {
             _ = textInputView.becomeFirstResponder()
+            isInputAccessoryViewEnabled = true
             return true
         } else {
             return false
@@ -692,6 +693,7 @@ open class TextView: UIScrollView {
     /// Notifies this object that it has been asked to relinquish its status as first responder in its window.
     @discardableResult
     override open func resignFirstResponder() -> Bool {
+      isInputAccessoryViewEnabled = false
       return textInputView.resignFirstResponder()
     }
 
