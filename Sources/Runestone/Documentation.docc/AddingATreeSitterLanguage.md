@@ -34,7 +34,7 @@ Runestone abstracts everything related to parsing and syntax highlighting text a
 
 #### Using the TreeSitterLanguages Swift Package
 
-The easiest way to add a Tree-sitter parser to your project is by adding the [TreeSitterLanguages](https://github.com/simonbs/treesitterlanguages) Swift package. The package is used by the [Runestone Editor](https://apps.apple.com/us/app/runestone-editor/id1548193893) app and as such contains all languages supported by Runestone Editor.
+The easiest way to add a Tree-sitter parser to your project is by adding the [TreeSitterLanguages](https://github.com/simonbs/treesitterlanguages) Swift package. The package is used by the [Runestone Text Editor](https://apps.apple.com/us/app/runestone-editor/id1548193893) app and as such contains all languages supported by Runestone Text Editor.
 
 TreeSitterLanguages contain three Swift packages for each language. These are detailed in the [README](https://github.com/simonbs/TreeSitterLanguages/blob/main/README.md) in the repository but at a high level they serve the following purposes.
 
@@ -79,7 +79,7 @@ After importing a Tree-sitter parser using the [TreeSitterLanguages](https://git
 
 ```swift
 let text = "let foo = \"Hello World\""
-let state = TextViewState(text: text, theme: TomorrowTheme(), language: .javaScript)
+let state = TextViewState(text: text, language: .javaScript)
 textView.setState(state)
 ```
 
@@ -90,6 +90,6 @@ let text = "let foo = \"Hello World\""
 let highlightsQuery = TreeSitterLanguage.Query(contentsOf: "queries/highlights.scm")
 let injectionsQuery = TreeSitterLanguage.Query(contentsOf: "queries/injections.scm")
 let language = TreeSitterLanguage(tree_sitter_javascript(), highlightsQuery: highlightsQuery, injectionsQuery: injectionsQuery)
-let state = TextViewState(text: text, theme: TomorrowTheme(), language: language)
+let state = TextViewState(text: text, language: language)
 textView.setState(state)
 ```
