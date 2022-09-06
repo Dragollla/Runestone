@@ -840,6 +840,7 @@ final class TextInputView: UIView, UITextInput {
 }
 
 // MARK: - Theming
+@available(iOS 14.0, *)
 private extension TextInputView {
     private func applyThemeToChildren() {
         lineManager.estimatedLineHeight = estimatedLineHeight
@@ -1530,6 +1531,7 @@ extension TextInputView: TreeSitterLanguageModeDelegate {
 }
 
 // MARK: - LineControllerStorageDelegate
+@available(iOS 14, *)
 extension TextInputView: LineControllerStorageDelegate {
     func lineControllerStorage(_ storage: LineControllerStorage, didCreate lineController: LineController) {
         lineController.delegate = self
@@ -1543,6 +1545,7 @@ extension TextInputView: LineControllerStorageDelegate {
 }
 
 // MARK: - LineControllerDelegate
+@available(iOS 14, *)
 extension TextInputView: LineControllerDelegate {
     func lineSyntaxHighlighter(for lineController: LineController) -> LineSyntaxHighlighter? {
         let syntaxHighlighter = languageMode.createLineSyntaxHighlighter()

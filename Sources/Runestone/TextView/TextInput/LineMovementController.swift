@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 final class LineMovementController {
     var lineManager: LineManager
     var stringView: StringView

@@ -1,8 +1,11 @@
-protocol LineControllerStorageDelegate: AnyObject {
+@available(iOS 14, *)
+public protocol LineControllerStorageDelegate: AnyObject {
     func lineControllerStorage(_ storage: LineControllerStorage, didCreate lineController: LineController)
 }
 
-final class LineControllerStorage {
+@available(iOS 14, *)
+public final class LineControllerStorage {
+      
     weak var delegate: LineControllerStorageDelegate?
     subscript(_ lineID: DocumentLineNodeID) -> LineController? {
         return lineControllers[lineID]
@@ -21,7 +24,7 @@ final class LineControllerStorage {
     }
     private var lineControllers: [DocumentLineNodeID: LineController] = [:]
 
-    init(stringView: StringView) {
+    public init(stringView: StringView) {
         self.stringView = stringView
     }
 
@@ -49,8 +52,9 @@ final class LineControllerStorage {
     }
 }
 
+@available(iOS 14, *)
 extension LineControllerStorage: Sequence {
-    struct Iterator: IteratorProtocol {
+    public struct Iterator: IteratorProtocol {
         private let lineControllers: [LineController]
         private var index = 0
 
@@ -58,7 +62,7 @@ extension LineControllerStorage: Sequence {
             self.lineControllers = lineControllers
         }
 
-        mutating func next() -> LineController? {
+        public mutating func next() -> LineController? {
             if index < lineControllers.count {
                 let lineController = lineControllers[index]
                 index += 1
@@ -69,7 +73,7 @@ extension LineControllerStorage: Sequence {
         }
     }
 
-    func makeIterator() -> Iterator {
+    public func makeIterator() -> Iterator {
         let lineControllers = Array(lineControllers.values)
         return Iterator(lineControllers: lineControllers)
     }

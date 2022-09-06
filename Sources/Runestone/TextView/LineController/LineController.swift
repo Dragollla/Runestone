@@ -7,13 +7,13 @@ import UIKit
 typealias LineFragmentTree = RedBlackTree<LineFragmentNodeID, Int, LineFragmentNodeData>
 
 @available(iOS 14, *)
-protocol LineControllerDelegate: AnyObject {
+public protocol LineControllerDelegate: AnyObject {
     func lineSyntaxHighlighter(for lineController: LineController) -> LineSyntaxHighlighter?
     func lineControllerDidInvalidateLineWidthDuringAsyncSyntaxHighlight(_ lineController: LineController)
 }
 
 @available(iOS 14, *)
-final class LineController {
+public final class LineController {
     private enum TypesetAmount {
         case inRect(CGRect)
         case toLocation(Int)

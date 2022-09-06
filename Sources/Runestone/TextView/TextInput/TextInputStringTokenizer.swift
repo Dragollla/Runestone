@@ -56,6 +56,7 @@ final class TextInputStringTokenizer: UITextInputStringTokenizer {
 }
 
 // MARK: - Lines
+@available(iOS 14, *)
 private extension TextInputStringTokenizer {
     private func isPosition(_ position: UITextPosition, atLineBoundaryInDirection direction: UITextDirection) -> Bool {
         guard let indexedPosition = position as? IndexedPosition else {
@@ -118,6 +119,7 @@ private extension TextInputStringTokenizer {
 }
 
 // MARK: - Paragraphs
+@available(iOS 14, *)
 private extension TextInputStringTokenizer {
     private func isPosition(_ position: UITextPosition, atParagraphBoundaryInDirection direction: UITextDirection) -> Bool {
         // I can't seem to make Ctrl+A, Ctrl+E, Cmd+Left, and Cmd+Right work properly if this function returns anything but false.

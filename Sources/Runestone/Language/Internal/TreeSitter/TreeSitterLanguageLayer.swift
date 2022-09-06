@@ -1,6 +1,6 @@
 import Foundation
 
-@available(iOS 14, *)
+@available(iOS 14.0, *)
 final class TreeSitterLanguageLayer {
     typealias LayerAndNodeTuple = (layer: TreeSitterLanguageLayer, node: TreeSitterNode)
 

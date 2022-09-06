@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 14.0, *)
 public final class DefaultTheme: Runestone.Theme {
     public let font: UIFont = .monospacedSystemFont(ofSize: 14, weight: .regular)
     public let textColor = UIColor(themeColorNamed: "foreground")
@@ -85,6 +86,7 @@ public final class DefaultTheme: Runestone.Theme {
 #endif
 }
 
+@available(iOS 14.0, *)
 private extension UIColor {
     convenience init(themeColorNamed name: String) {
         self.init(named: "theme_" + name, in: .module, compatibleWith: nil)!
