@@ -50,6 +50,7 @@ The appearance of <doc:TextView> can be customized using a <doc:Theme>. This is 
 - <doc:Adding-a-Theme>
 - <doc:CreatingATheme>
 - ``Theme``
+- ``DefaultTheme``
 
 ### Syntax Highlighting
 
@@ -79,7 +80,7 @@ Automatically indent when inserting a new line break.
 - ``DetectedIndentStrategy``
 - ``TreeSitterIndentationScopes``
 
-### Search and Replace
+### Find and Replace
 
 Search the text for queries and replace matches with a string. Supports regular expressions.
 

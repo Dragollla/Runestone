@@ -1,6 +1,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
+/// Default theme used by Runestone when no other theme has been set.
 public final class DefaultTheme: Runestone.Theme {
     public let font: UIFont = .monospacedSystemFont(ofSize: 14, weight: .regular)
     public let textColor = UIColor(themeColorNamed: "foreground")

@@ -167,7 +167,7 @@ public final class LineController {
         return lineFragmentControllers(matching: query)
     }
 
-    func lineFragmentNode(containingCharacterAt location: Int) -> LineFragmentNode {
+    func lineFragmentNode(containingCharacterAt location: Int) -> LineFragmentNode? {
         return lineFragmentTree.node(containingLocation: location)
     }
 

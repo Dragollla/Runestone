@@ -69,7 +69,9 @@ private extension TextInputStringTokenizer {
         let lineLocation = line.location
         let lineLocalLocation = location - lineLocation
         let lineController = lineControllerStorage.getOrCreateLineController(for: line)
-        let lineFragmentNode = lineController.lineFragmentNode(containingCharacterAt: lineLocalLocation)
+        guard let lineFragmentNode = lineController.lineFragmentNode(containingCharacterAt: lineLocalLocation) else {
+            return false
+        }
         if direction.isForward {
             let isLastLineFragment = lineFragmentNode.index == lineController.numberOfLineFragments - 1
             if isLastLineFragment {
@@ -93,7 +95,9 @@ private extension TextInputStringTokenizer {
         let lineController = lineControllerStorage.getOrCreateLineController(for: line)
         let lineLocation = line.location
         let lineLocalLocation = location - lineLocation
-        let lineFragmentNode = lineController.lineFragmentNode(containingCharacterAt: lineLocalLocation)
+        guard let lineFragmentNode = lineController.lineFragmentNode(containingCharacterAt: lineLocalLocation) else {
+            return nil
+        }
         if direction.isForward {
             if location == stringView.string.length {
                 return position

@@ -340,6 +340,8 @@ open class TextView: UIScrollView {
     /// Symbol used to display tabs.
     ///
     /// The value is only used when invisible tab characters is enabled. The default is ▸.
+    ///
+    /// Common characters for this symbol include ▸, ⇥, ➜, ➞, and ❯.
     public var tabSymbol: String {
         get {
             return textInputView.tabSymbol
@@ -351,6 +353,8 @@ open class TextView: UIScrollView {
     /// Symbol used to display spaces.
     ///
     /// The value is only used when showing invisible space characters is enabled. The default is ·.
+    ///
+    /// Common characters for this symbol include ·, •, and _.
     public var spaceSymbol: String {
         get {
             return textInputView.spaceSymbol
@@ -362,6 +366,8 @@ open class TextView: UIScrollView {
     /// Symbol used to display non-breaking spaces.
     ///
     /// The value is only used when showing invisible space characters is enabled. The default is ·.
+    ///
+    /// Common characters for this symbol include ·, •, and _.
     public var nonBreakingSpaceSymbol: String {
         get {
             return textInputView.nonBreakingSpaceSymbol
@@ -373,6 +379,8 @@ open class TextView: UIScrollView {
     /// Symbol used to display line break.
     ///
     /// The value is only used when showing invisible line break characters is enabled. The default is ¬.
+    ///
+    /// Common characters for this symbol include ¬, ↵, ↲, ⤶, and ¶.
     public var lineBreakSymbol: String {
         get {
             return textInputView.lineBreakSymbol
@@ -384,6 +392,8 @@ open class TextView: UIScrollView {
     /// Symbol used to display soft line breaks.
     ///
     /// The value is only used when showing invisible soft line break characters is enabled. The default is ¬.
+    ///
+    /// Common characters for this symbol include ¬, ↵, ↲, ⤶, and ¶.
     public var softLineBreakSymbol: String {
         get {
             return textInputView.softLineBreakSymbol
@@ -565,6 +575,8 @@ open class TextView: UIScrollView {
     }
 #if compiler(>=5.7)
     /// A boolean value that enables a text view’s built-in find interaction.
+    ///
+    /// After enabling the find interaction, use [`presentFindNavigator(showingReplace:)`](https://developer.apple.com/documentation/uikit/uifindinteraction/3975832-presentfindnavigator) on <doc:findInteraction> to present the find navigator.
     @available(iOS 16, *)
     public var isFindInteractionEnabled: Bool {
         get {
@@ -574,6 +586,11 @@ open class TextView: UIScrollView {
             textSearchingHelper.isFindInteractionEnabled = newValue
         }
     }
+    /// The text view’s built-in find interaction.
+    ///
+    /// Set <doc:isFindInteractionEnabled> to true to enable the text view's built-in find interaction. This method returns nil when the interaction isn't enabled.
+    ///
+    /// Call [`presentFindNavigator(showingReplace:)`](https://developer.apple.com/documentation/uikit/uifindinteraction/3975832-presentfindnavigator) on the UIFindInteraction object to invoke the find interaction and display the find panel.
     @available(iOS 16, *)
     public var findInteraction: UIFindInteraction? {
         return textSearchingHelper.findInteraction
