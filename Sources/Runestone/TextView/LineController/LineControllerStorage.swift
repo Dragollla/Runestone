@@ -5,14 +5,10 @@ public protocol LineControllerStorageDelegate: AnyObject {
 
 @available(iOS 14, *)
 public final class LineControllerStorage {
-      
+
     weak var delegate: LineControllerStorageDelegate?
     subscript(_ lineID: DocumentLineNodeID) -> LineController? {
         return lineControllers[lineID]
-    }
-
-    fileprivate var numberOfLineControllers: Int {
-        return lineControllers.count
     }
 
     var stringView: StringView {
@@ -22,17 +18,24 @@ public final class LineControllerStorage {
             }
         }
     }
-    private var lineControllers: [DocumentLineNodeID: LineController] = [:]
 
-    public init(stringView: StringView) {
+    fileprivate var numberOfLineControllers: Int {
+        return lineControllers.count
+    }
+
+    private var lineControllers: [DocumentLineNodeID: LineController] = [:]
+    private let lineControllerFactory: LineControllerFactory
+
+    public init(stringView: StringView, lineControllerFactory: LineControllerFactory) {
         self.stringView = stringView
+        self.lineControllerFactory = lineControllerFactory
     }
 
     func getOrCreateLineController(for line: DocumentLineNode) -> LineController {
         if let cachedLineController = lineControllers[line.id] {
             return cachedLineController
         } else {
-            let lineController = LineController(line: line, stringView: stringView)
+            let lineController = lineControllerFactory.makeLineController(for: line)
             lineControllers[line.id] = lineController
             delegate?.lineControllerStorage(self, didCreate: lineController)
             return lineController

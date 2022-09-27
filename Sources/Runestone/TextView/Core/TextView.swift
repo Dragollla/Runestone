@@ -500,10 +500,6 @@ open class TextView: UIScrollView {
     }
     /// Automatically scrolls the text view to show the caret when typing or moving the caret.
     public var isAutomaticScrollEnabled = true
-    /// When automatic scrolling is enabled and the caret leaves the viewport, the text view will automatically scroll the content.
-    ///
-    /// The `automaticScrollInset` is applied to the viewport before scrolling. The inset can be used to adjust when the text view should scroll the content. For example it can be used to account for views overlaying the content. The text view will does account for the keyboard or the status bar.
-    public var automaticScrollInset: UIEdgeInsets = .zero
     /// Amount of overscroll to add in the vertical direction.
     ///
     /// The overscroll is a factor of the scrollable area height and will not take into account any insets. 0 means no overscroll and 1 means an amount equal to the height of the text view. Detaults to 0.
@@ -647,7 +643,7 @@ open class TextView: UIScrollView {
         let height = baseContentSize.height + verticalOverscrollLength
         return CGSize(width: width, height: height)
     }
-  
+
     private var gestureRecognizerDelegate: GestureRecognizer?
     /// Create a new text view.
     /// - Parameter frame: The frame rectangle of the text view.
@@ -656,7 +652,7 @@ open class TextView: UIScrollView {
         super.init(frame: frame)
         backgroundColor = .white
         textInputView.delegate = self
-        textInputView.scrollView = self
+        textInputView.gutterParentView = self
         editableTextInteraction.textInput = textInputView
         nonEditableTextInteraction.textInput = textInputView
         editableTextInteraction.delegate = self
@@ -691,6 +687,7 @@ open class TextView: UIScrollView {
     /// Called when the safe area of the view changes.
     override open func safeAreaInsetsDidChange() {
         super.safeAreaInsetsDidChange()
+        textInputView.scrollViewSafeAreaInsets = safeAreaInsets
         contentSize = preferredContentSize
         layoutIfNeeded()
     }
@@ -886,7 +883,7 @@ open class TextView: UIScrollView {
         becomeFirstResponder()
         let line = textInputView.lineManager.line(atRow: lineIndex)
         textInputView.layoutLines(toLocation: line.location)
-        scroll(to: line.location)
+        scrollLocationToVisible(line.location)
         layoutIfNeeded()
         switch selection {
         case .beginning:
@@ -900,6 +897,14 @@ open class TextView: UIScrollView {
     }
 
     /// Search for the specified query.
+    ///
+    /// The code below shows how a ``SearchQuery`` can be constructed and passed to ``search(for:)``.
+    ///
+    /// ```swift
+    /// let query = SearchQuery(text: "foo", matchMethod: .contains, isCaseSensitive: false)
+    /// let results = textView.search(for: query)
+    /// ```
+    ///
     /// - Parameter query: Query to find matches for.
     /// - Returns: Results matching the query.
     public func search(for query: SearchQuery) -> [SearchResult] {
@@ -910,7 +915,17 @@ open class TextView: UIScrollView {
 
     /// Search for the specified query and return results that take a replacement string into account.
     ///
-    /// When searching for a regular expression this function will perform pattern matching and take matched groups into account in the returned results.
+    /// When searching for a regular expression this function will perform pattern matching and take the matched groups into account in the returned results.
+    ///
+    /// The code below shows how a ``SearchQuery`` can be constructed and passed to ``search(for:replacingMatchesWith:)`` and how the returned search results can be used to perform a replace operation.
+    ///
+    /// ```swift
+    /// let query = SearchQuery(text: "foo", matchMethod: .contains, isCaseSensitive: false)
+    /// let results = textView.search(for: query, replacingMatchesWith: "bar")
+    /// let replacements = results.map { BatchReplaceSet.Replacement(range: $0.range, text: $0.replacementText) }
+    /// let batchReplaceSet = BatchReplaceSet(replacements: replacements)
+    /// textView.replaceText(in: batchReplaceSet)
+    /// ```
     ///
     /// - Parameters:
     ///   - query: Query to find matches for.
@@ -1093,23 +1108,17 @@ extension TextView {
     public var hasText: Bool {
         return textInputView.hasText
     }
-}
 
-@available(iOS 14.0, *)
-extension TextView {
-    func scroll(to range: NSRange) {
-        let upperCaretRect = textInputView.caretRect(at: range.upperBound)
-        let lowerContentOffset = contentOffset(forScrollingToLocation: range.lowerBound)
-        let viewportWidth = frame.width - gutterWidth
-        let distanceOutOfScreen = upperCaretRect.minX - (lowerContentOffset.x + viewportWidth)
-        if distanceOutOfScreen > 0 {
-            // Scroll to reveal the entire range on the X-axis.
-            let offsetX = lowerContentOffset.x + min(distanceOutOfScreen, viewportWidth)
-            let cappedOffsetX = min(max(offsetX, minimumContentOffset.x), maximumContentOffset.x)
-            contentOffset = CGPoint(x: cappedOffsetX, y: lowerContentOffset.y)
-        } else {
-            contentOffset = lowerContentOffset
-        }
+    /// Scrolls the text view to reveal the text in the specified range.
+    ///
+    /// The function will scroll the text view as little as possible while revealing as much as possible of the specified range. It is not guaranteed that the entire range is visible after performing the scroll.
+    ///
+    /// - Parameters:
+    ///   - range: The range of text to scroll into view.
+    @available(iOS 14.0, *)
+    public func scrollRangeToVisible(_ range: NSRange) {
+        textInputView.layoutLines(toLocation: range.upperBound)
+        justScrollRangeToVisible(range)
     }
 }
 
@@ -1140,10 +1149,10 @@ private extension TextView {
         } else if gestureRecognizer.state == .changed, let previousSelectedRange = previousSelectedRangeDuringGestureHandling {
             if selectedRange.lowerBound != previousSelectedRange.lowerBound {
                 // User is adjusting the lower bound (location) of the selected range.
-                scroll(to: selectedRange.lowerBound)
+                scrollLocationToVisible(selectedRange.lowerBound)
             } else if selectedRange.upperBound != previousSelectedRange.upperBound {
                 // User is adjusting the upper bound (length) of the selected range.
-                scroll(to: selectedRange.upperBound)
+                scrollLocationToVisible(selectedRange.upperBound)
             }
             previousSelectedRangeDuringGestureHandling = selectedRange
         }
@@ -1217,42 +1226,20 @@ private extension TextView {
         }
     }
 
-    private func scroll(to location: Int) {
-        let newContentOffset = contentOffset(forScrollingToLocation: location)
-        if newContentOffset != contentOffset {
-            setContentOffset(newContentOffset, animated: false)
-        }
+    private func justScrollRangeToVisible(_ range: NSRange) {
+        let lowerBoundRect = textInputView.caretRect(at: range.lowerBound)
+        let upperBoundRect = range.length == 0 ? lowerBoundRect : textInputView.caretRect(at: range.upperBound)
+        let rectMinX = min(lowerBoundRect.minX, upperBoundRect.minX)
+        let rectMaxX = max(lowerBoundRect.maxX, upperBoundRect.maxX)
+        let rectMinY = min(lowerBoundRect.minY, upperBoundRect.minY)
+        let rectMaxY = max(lowerBoundRect.maxY, upperBoundRect.maxY)
+        let rect = CGRect(x: rectMinX, y: rectMinY, width: rectMaxX - rectMinX, height: rectMaxY - rectMinY)
+        contentOffset = contentOffsetForScrollingToVisibleRect(rect)
     }
 
-    private func contentOffset(forScrollingToLocation location: Int) -> CGPoint {
-        let caretRect = textInputView.caretRect(at: location)
-        let viewportMinX = contentOffset.x + automaticScrollInset.left + gutterWidth
-        let viewportMinY = contentOffset.y + automaticScrollInset.top
-        let viwportHeight = frame.height - automaticScrollInset.top - automaticScrollInset.bottom
-        let viewportWidth = frame.width - gutterWidth - automaticScrollInset.left - automaticScrollInset.right
-        let viewport = CGRect(x: viewportMinX, y: viewportMinY, width: viewportWidth, height: viwportHeight)
-        var preferredContentOffset = contentOffset
-        if caretRect.minX < viewport.minX {
-            preferredContentOffset.x = caretRect.minX - gutterWidth - automaticScrollInset.left
-        }
-        if caretRect.maxX > viewport.maxX {
-            preferredContentOffset.x = caretRect.maxX - viewport.width - gutterWidth + automaticScrollInset.right
-        }
-        if caretRect.minY < viewport.minY {
-            preferredContentOffset.y = caretRect.minY - automaticScrollInset.top
-        }
-        if caretRect.maxY > viewport.maxY {
-            preferredContentOffset.y = caretRect.maxY - viewport.height - automaticScrollInset.top
-        }
-        if preferredContentOffset.x <= textContainerInset.left - adjustedContentInset.left {
-            preferredContentOffset.x = adjustedContentInset.left * -1
-        }
-        if preferredContentOffset.y <= textContainerInset.top - adjustedContentInset.top {
-            preferredContentOffset.y = adjustedContentInset.top * -1
-        }
-        let cappedXOffset = min(max(preferredContentOffset.x, minimumContentOffset.x), maximumContentOffset.x)
-        let cappedYOffset = min(max(preferredContentOffset.y, minimumContentOffset.y), maximumContentOffset.y)
-        return CGPoint(x: cappedXOffset, y: cappedYOffset)
+    private func scrollLocationToVisible(_ location: Int) {
+        let range = NSRange(location: location, length: 0)
+        justScrollRangeToVisible(range)
     }
 
     private func installEditableInteraction() {
@@ -1272,6 +1259,41 @@ private extension TextView {
                 gestureRecognizer.require(toFail: tapGestureRecognizer)
             }
         }
+    }
+
+    /// Computes a content offset to scroll to in order to reveal the specified rectangle.
+    ///
+    /// The function will return a rectangle that scrolls the text view a minimum amount while revealing as much as possible of the rectangle. It is not guaranteed that the entire rectangle can be revealed.
+    /// - Parameter rect: The rectangle to reveal.
+    /// - Returns: The content offset to scroll to.
+    private func contentOffsetForScrollingToVisibleRect(_ rect: CGRect) -> CGPoint {
+        // Create the viewport: a rectangle containing the content that is visible to the user.
+        var viewport = CGRect(x: contentOffset.x, y: contentOffset.y, width: frame.width, height: frame.height)
+        viewport.origin.y += safeAreaInsets.top
+        viewport.origin.x += safeAreaInsets.left + gutterWidth
+        viewport.size.width -= safeAreaInsets.left + safeAreaInsets.right + gutterWidth
+        viewport.size.height -= safeAreaInsets.top + safeAreaInsets.bottom
+        // Construct the best possible content offset.
+        var newContentOffset = contentOffset
+        if rect.minX < viewport.minX {
+            newContentOffset.x -= viewport.minX - rect.minX
+        } else if rect.maxX > viewport.maxX && rect.width <= viewport.width {
+            // The end of the rectangle is not visible and the rect fits within the screen so we'll scroll to reveal the entire rect.
+            newContentOffset.x += rect.maxX - viewport.maxX
+        } else if rect.maxX > viewport.maxX {
+            newContentOffset.x += rect.minX
+        }
+        if rect.minY < viewport.minY {
+            newContentOffset.y -= viewport.minY - rect.minY
+        } else if rect.maxY > viewport.maxY && rect.height <= viewport.height {
+            // The end of the rectangle is not visible and the rect fits within the screen so we'll scroll to reveal the entire rect.
+            newContentOffset.y += rect.maxY - viewport.maxY
+        } else if rect.maxY > viewport.maxY {
+            newContentOffset.y += rect.minY
+        }
+        let cappedXOffset = min(max(newContentOffset.x, minimumContentOffset.x), maximumContentOffset.x)
+        let cappedYOffset = min(max(newContentOffset.y, minimumContentOffset.y), maximumContentOffset.y)
+        return CGPoint(x: cappedXOffset, y: cappedYOffset)
     }
 }
 
@@ -1317,7 +1339,7 @@ extension TextView: TextInputViewDelegate {
 
     func textInputViewDidChange(_ view: TextInputView) {
         if isAutomaticScrollEnabled, let newRange = textInputView.selectedRange, newRange.length == 0 {
-            scroll(to: newRange.location)
+            scrollLocationToVisible(newRange.location)
         }
         editorDelegate?.textViewDidChange(self)
     }
@@ -1326,7 +1348,7 @@ extension TextView: TextInputViewDelegate {
         UIMenuController.shared.hideMenu(from: self)
         highlightNavigationController.selectedRange = view.selectedRange
         if isAutomaticScrollEnabled, let newRange = textInputView.selectedRange, newRange.length == 0 {
-            scroll(to: newRange.location)
+            scrollLocationToVisible(newRange.location)
         }
         editorDelegate?.textViewDidChangeSelection(self)
     }
@@ -1396,15 +1418,13 @@ extension TextView: HighlightNavigationControllerDelegate {
     func highlightNavigationController(_ controller: HighlightNavigationController,
                                        shouldNavigateTo highlightNavigationRange: HighlightNavigationRange) {
         let range = highlightNavigationRange.range
+        scrollRangeToVisible(range)
+        textInputView.selectedTextRange = IndexedRange(range)
         installEditableInteraction()
         becomeFirstResponder()
         if !isEditable {
           installNonEditableInteraction()
         }
-        // Layout lines up until the location of the range so we can scroll to it immediately after.
-        textInputView.layoutLines(toLocation: range.upperBound)
-        scroll(to: range)
-        textInputView.selectedRange = range
         textInputView.presentEditMenuForText(in: range)
         switch highlightNavigationRange.loopMode {
         case .previousGoesToLast:
@@ -1428,11 +1448,11 @@ extension TextView: SearchControllerDelegate {
 @available(iOS 14.0, *)
 class GestureRecognizer: NSObject, UIGestureRecognizerDelegate {
   let textView: TextView
-  
+
   init(_ textView: TextView) {
     self.textView = textView
   }
-  
+
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     if gestureRecognizer === textView.tapGestureRecognizer {
       return !textView.isEditing && !textView.isDragging && !textView.isDecelerating && textView.delegateAllowsEditingToBegin
@@ -1440,7 +1460,7 @@ class GestureRecognizer: NSObject, UIGestureRecognizerDelegate {
       return textView.gestureRecognizerShouldBegin(gestureRecognizer)
     }
   }
-  
+
   public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                 shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     if let klass = NSClassFromString("UITextRangeAdjustmentGestureRecognizer") {
@@ -1460,7 +1480,7 @@ extension TextView: KeyboardObserverDelegate {
                           keyboardWillShowWithHeight keyboardHeight: CGFloat,
                           animation: KeyboardObserver.Animation?) {
         if isAutomaticScrollEnabled, let newRange = textInputView.selectedRange, newRange.length == 0 {
-            scroll(to: newRange)
+            scrollRangeToVisible(newRange)
         }
     }
 }
